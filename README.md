@@ -547,3 +547,7 @@ for iteration in range(num_iterations):       # One iteration is one epoch.
 ~~~
 
 Shuffling changes which instances share a batch, but not the number of instances processed per epoch. Increasing the batch size usually means fewer updates per epoch; increasing the number of epochs means more complete passes over the same training data.
+
+### When to stop updating weights
+
+Training can stop after a chosen number of epochs, or earlier if the validation loss stops improving. This second approach is called **early stopping**: it prevents unnecessary updates and can reduce overfitting.
