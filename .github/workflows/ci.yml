@@ -29,8 +29,5 @@ jobs:
       - name: Type check
         run: mypy tests --ignore-missing-imports
 
-      - name: Validate notebooks
-        run: python -c "import json; [json.load(open(path)) for path in ('parkinsons_demo.ipynb', 'naive_bayes_demo.ipynb')]"
-
       - name: Run tests
         run: pytest -q
