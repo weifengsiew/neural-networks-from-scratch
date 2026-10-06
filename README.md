@@ -99,7 +99,7 @@ flowchart LR
     class o output;
 ```
 
-Each circle represents a neuron. The arrows show information flowing from the input layer, through the hidden layer, to the output layer. The matrix representation below shows how the neurons in one layer are represented together.
+*Each circle represents a neuron. The arrows show information flowing from the input layer, through the hidden layer, to the output layer. The matrix representation below shows how the neurons in one layer are represented together.*
 
 Suppose a layer has $q$ neurons and receives the activation vector $\mathbf{a}^{(l-1)}$ as input values. Each neuron has its own weight vector. We represent the layer by stacking those weight vectors as the rows of one matrix:
 
