@@ -84,15 +84,7 @@ The first row of $\Theta^{(l)}$ represents the first neuron, the second row repr
 
 ### Running numerical example
 
-To make the symbols concrete, use one two-feature instance and a small network with two hidden neurons and one output neuron. We will reuse these numbers as each theoretical step is introduced:
-
-$$
-\mathbf{x} = \begin{bmatrix}0.5 \\ -1.0\end{bmatrix},
-\qquad
-\mathbf{a}^{(0)} = \begin{bmatrix}1 \\ 0.5 \\ -1.0\end{bmatrix}.
-$$
-
-The leading $1$ is the bias activation. The hidden and output weight matrices are:
+Start with a hidden layer containing two neurons. Its weight matrix has one row for each neuron:
 
 $$
 \Theta^{(1)} =
@@ -104,7 +96,19 @@ $$
 \Theta^{(2)} = \begin{bmatrix}0.1 & 0.7 & -0.2\end{bmatrix}.
 $$
 
-The hidden matrix contains two rows because the hidden layer contains two neurons. Multiplying it by the input activation vector computes both neurons' preactivations in one operation:
+The first row contains the weights for the first hidden neuron, and the second row contains the weights for the second hidden neuron. Now introduce one two-feature input instance:
+
+$$
+\mathbf{x} = \begin{bmatrix}0.5 \\ -1.0\end{bmatrix}.
+$$
+
+Before entering the hidden layer, prepend the bias activation $1$ to obtain:
+
+$$
+\mathbf{a}^{(0)} = \begin{bmatrix}1 \\ 0.5 \\ -1.0\end{bmatrix}.
+$$
+
+Multiplying the hidden matrix by this activation vector computes both neurons' preactivations in one operation:
 
 $$
 \mathbf{z}^{(1)} = \Theta^{(1)}\mathbf{a}^{(0)}
