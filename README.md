@@ -4,6 +4,18 @@ This repository contains feed-forward neural network implemented from scratch an
 
 ## 1. What is a neural network?
 
+A **neuron** is the basic computational unit of a neural network. It receives input values, multiplies them by weights, adds a bias, and transforms the result with an activation function. A **layer** is a collection of neurons that receives the same incoming activation vector. A neural network contains multiple layers of neurons: an input layer, one or more hidden layers, and an output layer.
+
+For one neuron with inputs $a_1,\ldots,a_n$, weights $w_1,\ldots,w_n$, bias $b$, and activation function $\sigma$, the computation is:
+
+$$
+z = \sum_{k=1}^{n} w_k a_k + b,
+\qquad
+a = \sigma(z).
+$$
+
+The matrix equations below are the efficient vectorized version of applying this same calculation to every neuron in a layer at once.
+
 A neural network is a composition of parameterized functions. Each layer receives an activation vector from the previous layer, computes an affine transformation—a weighted sum of the activations plus a bias—and then applies a nonlinear activation function to the result.
 
 For layer $l$, let:
