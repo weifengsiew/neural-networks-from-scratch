@@ -80,33 +80,6 @@ $$
 \mathbf{z}^{(l)} = \Theta^{(l)}\mathbf{a}^{(l-1)}.
 $$
 
-Matrix multiplication evaluates every neuron at once. Row $j$ is the weight vector for neuron $j$, so the $j$th entry of the result is that neuron's scalar preactivation:
-
-$$
-z^{(l)}_j = \mathbf{w}^{(l)}_j{}^T\mathbf{a}^{(l-1)},
-\qquad
-\mathbf{z}^{(l)} =
-\begin{bmatrix}
-z^{(l)}_1 \\
-z^{(l)}_2 \\
-\vdots \\
-z^{(l)}_q
-\end{bmatrix}.
-$$
-
-The layer collects one scalar output from each neuron into the vector $\mathbf{z}^{(l)}$. It then applies the activation function independently to every entry, producing the layer's output activation vector:
-
-$$
-\mathbf{a}^{(l)} =
-\begin{bmatrix}
-\sigma\left(z^{(l)}_1\right) \\
-\sigma\left(z^{(l)}_2\right) \\
-\vdots \\
-\sigma\left(z^{(l)}_q\right)
-\end{bmatrix}
-= \sigma\left(\mathbf{z}^{(l)}\right).
-$$
-
 ### Running numerical example
 
 To make the symbols concrete, use one two-feature instance and a small network with two hidden neurons and one output neuron. We will reuse these numbers as each theoretical step is introduced:
