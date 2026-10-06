@@ -492,6 +492,8 @@ $$
 
 where $\eta$ is the step size, or learning rate. The minus sign moves the parameters opposite to the direction in which the loss increases.
 
+This uses the gradient interpretation from [Section 7](#7-gradients-how-deltas-become-weight-derivatives): the gradient points toward the steepest increase in loss, so subtracting it moves the weights toward lower loss.
+
 ~~~python
 def _update_weights(self, gradients, step_size):
     updated_thetas = []
