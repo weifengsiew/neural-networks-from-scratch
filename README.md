@@ -78,27 +78,29 @@ flowchart LR
         h2((a₂⁽¹⁾))
     end
     subgraph output["Output prediction"]
+        b2((1))
         o((p))
     end
 
-    b0 -->|Θ⁽¹⁾| h1
-    b0 -->|Θ⁽¹⁾| h2
-    x1 -->|Θ⁽¹⁾| h1
-    x1 -->|Θ⁽¹⁾| h2
-    x2 -->|Θ⁽¹⁾| h1
-    x2 -->|Θ⁽¹⁾| h2
-    h1 -->|Θ⁽²⁾| o
-    h2 -->|Θ⁽²⁾| o
+    b0 -->|Θ⁽¹⁾₁₀| h1
+    b0 -->|Θ⁽¹⁾₂₀| h2
+    x1 -->|Θ⁽¹⁾₁₁| h1
+    x1 -->|Θ⁽¹⁾₂₁| h2
+    x2 -->|Θ⁽¹⁾₁₂| h1
+    x2 -->|Θ⁽¹⁾₂₂| h2
+    b2 -->|Θ⁽²⁾₁₀| o
+    h1 -->|Θ⁽²⁾₁₁| o
+    h2 -->|Θ⁽²⁾₁₂| o
 
     classDef input fill:#e8f1ff,stroke:#356ae6,color:#111;
     classDef hidden fill:#e9f8ed,stroke:#2f8f46,color:#111;
     classDef output fill:#fff1d6,stroke:#c77b00,color:#111;
     class x1,x2,b0 input;
     class h1,h2 hidden;
-    class o output;
+    class o,b2 output;
 ```
 
-Each circle is a neuron. The arrows carry activations between layers; each neuron combines its incoming activations using its own weights and bias before applying the activation function. The matrix representation below stores the weights for all neurons in a layer at once.
+Each circle is a neuron or a bias activation. The arrows carry activations between layers; each arrow has its own weight, represented by one entry of the layer matrix. For example, $\Theta^{(1)}_{11}$ connects $x_1$ to the first hidden neuron, while $\Theta^{(1)}_{21}$ connects $x_1$ to the second hidden neuron. The matrix representation below stores all of these weights at once.
 
 Suppose a layer has $q$ neurons and receives the activation vector $\mathbf{a}^{(l-1)}$ as input values. Each neuron has its own weight vector. We represent the layer by stacking those weight vectors as the rows of one matrix:
 
