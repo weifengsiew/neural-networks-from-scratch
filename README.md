@@ -68,6 +68,26 @@ output = sigmoid(np.array([preactivation]))  # [0.7311]
 
 A neural network is a composition of parameterized functions. Each layer receives an activation vector from the previous layer, computes an affine transformation—a weighted sum of the activations plus a bias—and then applies a nonlinear activation function to the result.
 
+A **layer** contains many neurons. Each neuron has its own weight vector and bias, so each neuron produces one entry in the layer's output vector. The weight vectors are stacked row by row to form one weight matrix. Matrix multiplication therefore evaluates all neurons in the layer simultaneously:
+
+$$
+\Theta^{(l)} =
+\begin{bmatrix}
+\mathbf{w}^{(l)}_1{}^T \\
+\mathbf{w}^{(l)}_2{}^T \\
+\vdots \\
+\mathbf{w}^{(l)}_q{}^T
+\end{bmatrix},
+\qquad
+\mathbf{z}^{(l)} = \Theta^{(l)}\mathbf{a}^{(l-1)}.
+$$
+
+Here, $q$ is the number of neurons in the layer. Row $j$ of $\Theta^{(l)}$ contains the weights for neuron $j$, and entry $j$ of $\mathbf{z}^{(l)}$ is that neuron's preactivation. The activation function is then applied element by element:
+
+$$
+\mathbf{a}^{(l)} = \sigma\left(\mathbf{z}^{(l)}\right).
+$$
+
 For layer $l$, let:
 
 - $\mathbf{a}^{(l-1)}$ be the incoming activations;
