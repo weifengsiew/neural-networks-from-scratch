@@ -40,6 +40,41 @@ def prepend_bias_term(activation: np.ndarray) -> np.ndarray:
     return np.insert(activation, 0, 1.0)
 ~~~
 
+### Running numerical example
+
+To make the symbols concrete, use one two-feature instance and a small network with two hidden neurons and one output neuron. We will reuse these numbers as each theoretical step is introduced:
+
+$$
+\mathbf{x} = \begin{bmatrix}0.5 \\ -1.0\end{bmatrix},
+\qquad
+\mathbf{a}^{(0)} = \begin{bmatrix}1 \\ 0.5 \\ -1.0\end{bmatrix}.
+$$
+
+The leading $1$ is the bias activation. The hidden and output weight matrices are:
+
+$$
+\Theta^{(1)} =
+\begin{bmatrix}
+0.2 & 0.4 & -0.6 \\
+-0.5 & 0.8 & 0.3
+\end{bmatrix},
+\qquad
+\Theta^{(2)} = \begin{bmatrix}0.1 & 0.7 & -0.2\end{bmatrix}.
+$$
+
+In code, these same vectors and matrices are:
+
+~~~python
+x = np.array([0.5, -1.0])
+a0 = prepend_bias_term(x)  # [1.0, 0.5, -1.0]
+
+theta_hidden = np.array([
+    [0.2, 0.4, -0.6],
+    [-0.5, 0.8, 0.3],
+])
+theta_output = np.array([[0.1, 0.7, -0.2]])
+~~~
+
 ## 2. Forward propagation: inputs become outputs
 
 Forward propagation evaluates the network from left to right. For one instance, the input features are augmented with a bias term, passed through every hidden layer, and finally transformed into an output probability.
@@ -69,25 +104,9 @@ def _hidden_layer(self, theta: np.ndarray, input: np.ndarray):
     return preactivation, activation
 ~~~
 
-### Numerical example
+### Applying the running example
 
-Consider one two-feature instance and a network with two hidden neurons and one output neuron:
-
-$$
-\mathbf{x} = \begin{bmatrix}0.5 \\ -1.0\end{bmatrix},
-\qquad
-\mathbf{a}^{(0)} = \begin{bmatrix}1 \\ 0.5 \\ -1.0\end{bmatrix}.
-$$
-
-The leading (1) is the bias activation. Let the hidden-layer weight matrix be:
-
-$$
-\Theta^{(1)} =
-\begin{bmatrix}
-0.2 & 0.4 & -0.6 \\
--0.5 & 0.8 & 0.3
-\end{bmatrix}.
-$$
+Using the vectors and matrices introduced in Section 1, the hidden preactivation vector is the matrix-vector product:
 
 The hidden preactivation vector is the matrix-vector product:
 
@@ -112,12 +131,6 @@ $$
 \mathbf{a}^{(1)}
 \approx
 \begin{bmatrix}1 \\ 0.7311 \\ 0.4013\end{bmatrix}.
-$$
-
-Now use the output-layer weights:
-
-$$
-\Theta^{(2)} = \begin{bmatrix}0.1 & 0.7 & -0.2\end{bmatrix}.
 $$
 
 The output preactivation and output activation are:
