@@ -548,7 +548,7 @@ for iteration in range(num_iterations):       # One iteration is one epoch.
 
 Shuffling changes which instances share a batch, but not the number of instances processed per epoch. Increasing the batch size usually means fewer updates per epoch; increasing the number of epochs means more complete passes over the same training data.
 
-## 11. Train, validation, and test sets
+## 11. Evaluating Generalization with Held-Out Data
 
 We split the dataset into three parts:
 
