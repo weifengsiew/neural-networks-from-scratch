@@ -574,6 +574,21 @@ Useful next topics include activation functions, alternative optimizers, learnin
 | Multiclass cross-entropy | $-\sum_{c=1}^{C} y_c\log(p_c)$ | Multiclass classification with one score/logit per class | Compares the class probabilities with the true class | Requires one output for each class |
 | Mean squared error | $\frac{1}{d}\sum_{j=1}^{d}(y_j-\hat{y}_j)^2$ | Regression with numeric targets | Simple and useful for measuring numerical error | Can produce weaker gradients than cross-entropy in some sigmoid-classification cases |
 
+### Classification metrics
+
+For binary classification, let **TP** be true positives, **TN** true negatives, **FP** false positives, and **FN** false negatives. These metrics evaluate predictions after choosing a classification threshold, except AUROC and AUPRC, which evaluate performance across thresholds.
+
+| Metric | Equation or definition | What it measures |
+| --- | --- | --- |
+| Accuracy | $\frac{\mathrm{TP}+\mathrm{TN}}{\mathrm{TP}+\mathrm{TN}+\mathrm{FP}+\mathrm{FN}}$ | The proportion of all predictions that are correct. |
+| Precision | $\frac{\mathrm{TP}}{\mathrm{TP}+\mathrm{FP}}$ | Among predicted positives, the proportion that are actually positive. |
+| Recall | $\frac{\mathrm{TP}}{\mathrm{TP}+\mathrm{FN}}$ | Among actual positives, the proportion that are found. |
+| F1 score | $2\frac{\mathrm{precision}\cdot\mathrm{recall}}{\mathrm{precision}+\mathrm{recall}}$ | The harmonic mean of precision and recall. |
+| AUROC | Area under the true-positive-rate versus false-positive-rate curve across thresholds. | How well the model ranks positive instances above negative instances. |
+| AUPRC | Area under the precision-recall curve across thresholds. | Precision-recall performance across thresholds; often especially informative when the positive class is rare. |
+
+Accuracy can be misleading when classes are imbalanced. Precision, recall, F1, and AUPRC can give a more useful view of positive-class performance; the most appropriate metric depends on the relative cost of false positives and false negatives.
+
 ### Activation functions
 
 | Activation | Typical use | Strength | Limitation |
