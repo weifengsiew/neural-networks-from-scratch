@@ -4,7 +4,7 @@ This repository contains feed-forward neural network implemented from scratch an
 
 ## 1. The neuron
 
-A **neuron** is the basic computational unit of a neural network. It receives input values, multiplies them by weights, adds a bias, and transforms the result with an activation function.
+A **neuron** is the basic computational unit of a neural network. It consists of weights, a bias, and an activation function. The neuron receives input values, multiplies them by its weights, adds its bias, and transforms the result with its activation function.
 
 For one neuron with inputs $a_1,\ldots,a_n$, weights $w_1,\ldots,w_n$, bias $b$, and activation function $\sigma$, the computation is:
 
