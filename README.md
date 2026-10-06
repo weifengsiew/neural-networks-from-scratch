@@ -47,6 +47,20 @@ z = \mathbf{w}^{T}\mathbf{a} + b
 a = \sigma(z) \approx 0.7311.
 $$
 
+The sigmoid equation used by the neuron is:
+
+$$
+\sigma(z) = \frac{1}{1 + e^{-z}}.
+$$
+
+For this example, the preactivation is $z=1.0$, so:
+
+$$
+a = \sigma(1.0)
+= \frac{1}{1 + e^{-1.0}}
+\approx 0.7311.
+$$
+
 In code, the input and weight vectors are one-dimensional NumPy arrays. A layer applies this same vector operation to many neurons at once using a matrix of weight vectors.
 
 ~~~python
