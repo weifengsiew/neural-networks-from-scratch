@@ -548,6 +548,16 @@ for iteration in range(num_iterations):       # One iteration is one epoch.
 
 Shuffling changes which instances share a batch, but not the number of instances processed per epoch. Increasing the batch size usually means fewer updates per epoch; increasing the number of epochs means more complete passes over the same training data.
 
+### Train, validation, and test sets
+
+We split the dataset into three parts:
+
+- The **training set** is used to calculate gradients and update the weights.
+- The **validation set** is used during training to monitor performance and choose when to stop.
+- The **test set** is held back until the end for an unbiased final evaluation.
+
 ### When to stop updating weights
 
-Training can stop after a chosen number of epochs, or earlier if the validation loss stops improving. This second approach is called **early stopping**: it prevents unnecessary updates and can reduce overfitting.
+After each epoch, we evaluate the validation loss. If it fails to improve for a chosen number of consecutive epochs, training stops; this is **early stopping**. We restore the weights from the epoch with the lowest validation loss, then evaluate those weights on the test set.
+
+Validation and test loss are more informative than training loss when judging generalization, because they measure performance on instances that were not used to update the weights. The goal of machine learning is not to memorize the training set, but to learn predictions that remain accurate for new, unseen instances.
