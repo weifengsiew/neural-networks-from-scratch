@@ -302,7 +302,7 @@ $$
 \boldsymbol{\delta}^{(L)} = \mathbf{p} - \mathbf{y}.
 $$
 
-The loss derivative describes how much the loss changes when the output preactivation $z$ changes slightly. For sigmoid output with binary cross-entropy, it simplifies to $p-y$, which is the output-layer delta used by backpropagation. Its sign gives the correction direction, and its magnitude gives the size of the error signal.
+Derivatives attribute changes in loss to changes in network values: $\partial J/\partial a$ measures sensitivity to an activation, $\partial a/\partial z$ measures how the activation responds to its preactivation, and $\partial J/\partial z$ combines both through the chain rule. For the output layer, this combined derivative is $p-y$.
 
 For a hidden layer, the chain rule gives:
 
@@ -318,8 +318,6 @@ and the sigmoid derivative is:
 $$
 \sigma'(z) = \sigma(z)(1-\sigma(z)).
 $$
-
-The sigmoid derivative describes how much a neuron's activation changes when its preactivation $z$ changes slightly. It is largest when the activation is near $0.5$ and small when the activation is near $0$ or $1$, so it controls how strongly the error signal passes through each hidden neuron.
 
 The code applies this equation from the output layer backward. `delta_current[1:]` removes the bias position because bias activations are not neurons that need a previous-layer error signal.
 
