@@ -302,7 +302,7 @@ $$
 \boldsymbol{\delta}^{(L)} = \mathbf{p} - \mathbf{y}.
 $$
 
-The loss derivative indicates how the output should change to reduce the loss. For sigmoid output with binary cross-entropy, it simplifies to $p-y$, which is the output-layer delta used by backpropagation. Its sign gives the correction direction, and its magnitude gives the size of the error signal.
+The loss derivative describes how much the loss changes when the output preactivation $z$ changes slightly. For sigmoid output with binary cross-entropy, it simplifies to $p-y$, which is the output-layer delta used by backpropagation. Its sign gives the correction direction, and its magnitude gives the size of the error signal.
 
 For a hidden layer, the chain rule gives:
 
@@ -356,6 +356,8 @@ $$
 \frac{\partial J}{\partial \Theta^{(l)}_{jk}}
 = \delta^{(l)}_j a^{(l-1)}_k.
 $$
+
+This gradient describes how much the loss changes when that particular weight changes slightly.
 
 In matrix form, the gradient for a layer is an outer product:
 
