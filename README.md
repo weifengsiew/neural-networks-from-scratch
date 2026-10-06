@@ -68,22 +68,34 @@ A neural network contains many layers: the input layer, hidden layers, and outpu
 
 ```mermaid
 flowchart LR
-    x1((x₁)) --> h1((h₁))
-    x1 --> h2((h₂))
-    x2((x₂)) --> h1
-    x2 --> h2
-    b1((bias)) --> h1
-    b1 --> h2
-    h1 --> o((output))
-    h2 --> o
-    b2((bias)) --> o
+    subgraph input["Input: a⁽⁰⁾ = [1, x₁, x₂]ᵀ"]
+        b0((1))
+        x1((x₁))
+        x2((x₂))
+    end
+    subgraph hidden["Hidden activations: a⁽¹⁾"]
+        h1((a₁⁽¹⁾))
+        h2((a₂⁽¹⁾))
+    end
+    subgraph output["Output prediction"]
+        o((p))
+    end
+
+    b0 -->|Θ⁽¹⁾| h1
+    b0 -->|Θ⁽¹⁾| h2
+    x1 -->|Θ⁽¹⁾| h1
+    x1 -->|Θ⁽¹⁾| h2
+    x2 -->|Θ⁽¹⁾| h1
+    x2 -->|Θ⁽¹⁾| h2
+    h1 -->|Θ⁽²⁾| o
+    h2 -->|Θ⁽²⁾| o
 
     classDef input fill:#e8f1ff,stroke:#356ae6,color:#111;
     classDef hidden fill:#e9f8ed,stroke:#2f8f46,color:#111;
     classDef output fill:#fff1d6,stroke:#c77b00,color:#111;
-    class x1,x2,b1 input;
+    class x1,x2,b0 input;
     class h1,h2 hidden;
-    class o,b2 output;
+    class o output;
 ```
 
 Each circle is a neuron. The arrows carry activations between layers; each neuron combines its incoming activations using its own weights and bias before applying the activation function. The matrix representation below stores the weights for all neurons in a layer at once.
