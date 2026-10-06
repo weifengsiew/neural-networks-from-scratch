@@ -287,7 +287,7 @@ def regularize_and_average_cost(thetas, total_cost, regularization_strength, num
     return total_cost / num_instances + regularization
 ~~~
 
-## 6. Backpropagation and gradients
+## 6. Backpropagation: computing the error signals
 
 Backpropagation computes the derivative of the loss with respect to every layer's preactivation. Define the delta for layer $l$ as:
 
@@ -350,7 +350,7 @@ def compute_deltas(thetas, y_pred, y_true, layers_activations):
     return deltas
 ~~~
 
-### From deltas to gradients
+## 7. Gradients: how deltas become weight derivatives
 
 For a weight connecting activation $a_k^{(l-1)}$ to neuron $j$ in layer $l$, the chain rule gives:
 
@@ -388,7 +388,7 @@ For a batch, the per-instance gradients are summed and then divided by the batch
 
 In practice, libraries such as PyTorch provide loss functions and automatic differentiation to compute the loss and gradients. The manual equations here are mainly useful for understanding what those tools calculate.
 
-## 7. Weight updates: gradient descent
+## 8. Weight updates: gradient descent
 
 Once the gradient is known, gradient descent changes every parameter according to:
 
@@ -413,7 +413,7 @@ def _update_weights(self, gradients, step_size):
     self.thetas = updated_thetas
 ~~~
 
-## 8. Instances, batches, epochs, and updates
+## 9. Instances, batches, epochs, and updates
 
 - An **instance** is one feature vector and its target $(\mathbf{x}_i,y_i)$.
 - A **batch** is a group of instances processed before one update.
