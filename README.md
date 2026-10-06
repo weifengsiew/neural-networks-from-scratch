@@ -601,3 +601,9 @@ Useful next topics include activation functions, alternative optimizers, learnin
 | Momentum SGD | Accumulate a moving direction from earlier gradients | Reduces oscillation and can accelerate progress | Requires a momentum hyperparameter |
 | Adam | Adapt the step size using moving estimates of gradient and squared gradient | Often converges quickly with little manual tuning | Uses more state and may generalize differently from plain SGD |
 | RMSprop | Scale updates using a moving average of squared gradients | Useful when gradient magnitudes vary across parameters | Still requires learning-rate and decay choices |
+
+### Computer vision and convolutional layers
+
+An image is naturally represented as a matrix of pixel values, or as several matrices when it has multiple colour channels. A standard fully connected network can flatten these matrices into one long vector before passing the values through ordinary hidden layers. For image tasks, convolutional neural networks instead use **convolutional layers** to preserve local spatial structure while learning features.
+
+Early convolutional layers learn low-level features such as edges, textures, and the presence of simple shapes such as circles. Later convolutional layers combine these into higher-level features, such as parts of objects. The output layer combines the high-level features to predict the image's class.
