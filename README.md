@@ -464,9 +464,9 @@ def compute_gradients(activations, deltas):
 
 For a batch, the per-instance gradients are summed and then divided by the batch size. The regularization gradient $\lambda\Theta/m$ is added to non-bias weights before the update.
 
-In practice, libraries such as PyTorch provide loss functions and automatic differentiation to compute the loss and gradients. The manual equations here are mainly useful for understanding what those tools calculate.
-
 ## 8. Good news: PyTorch can automate the update
+
+In practice, libraries such as PyTorch provide loss functions and automatic differentiation to compute the loss and gradients. The manual equations here are mainly useful for understanding what those tools calculate.
 
 PyTorch can calculate the gradients and update the weights for us. After the loss is computed, `loss.backward()` calculates the gradients and `optimizer.step()` applies the gradient-descent update:
 
