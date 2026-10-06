@@ -69,6 +69,97 @@ def _hidden_layer(self, theta: np.ndarray, input: np.ndarray):
     return preactivation, activation
 ~~~
 
+### Numerical example
+
+Consider one two-feature instance and a network with two hidden neurons and one output neuron:
+
+$$
+\mathbf{x} = \begin{bmatrix}0.5 \\ -1.0\end{bmatrix},
+\qquad
+\mathbf{a}^{(0)} = \begin{bmatrix}1 \\ 0.5 \\ -1.0\end{bmatrix}.
+$$
+
+The leading (1) is the bias activation. Let the hidden-layer weight matrix be:
+
+$$
+\Theta^{(1)} =
+\begin{bmatrix}
+0.2 & 0.4 & -0.6 \\
+-0.5 & 0.8 & 0.3
+\end{bmatrix}.
+$$
+
+The hidden preactivation vector is the matrix-vector product:
+
+$$
+\mathbf{z}^{(1)} = \Theta^{(1)}\mathbf{a}^{(0)}
+=
+\begin{bmatrix}
+0.2(1) + 0.4(0.5) - 0.6(-1.0) \\
+-0.5(1) + 0.8(0.5) + 0.3(-1.0)
+\end{bmatrix}
+=
+\begin{bmatrix}1.0 \\ -0.4\end{bmatrix}.
+$$
+
+Applying sigmoid gives the hidden output activations, followed by a new bias activation:
+
+$$
+\sigma(\mathbf{z}^{(1)})
+\approx
+\begin{bmatrix}0.7311 \\ 0.4013\end{bmatrix},
+\qquad
+\mathbf{a}^{(1)}
+\approx
+\begin{bmatrix}1 \\ 0.7311 \\ 0.4013\end{bmatrix}.
+$$
+
+Now use the output-layer weights:
+
+$$
+\Theta^{(2)} = \begin{bmatrix}0.1 & 0.7 & -0.2\end{bmatrix}.
+$$
+
+The output preactivation and output activation are:
+
+$$
+z^{(2)} = \Theta^{(2)}\mathbf{a}^{(1)}
+\approx 0.1 + 0.7(0.7311) - 0.2(0.4013)
+\approx 0.5315,
+$$
+
+$$
+p = \sigma(z^{(2)}) \approx 0.6298.
+$$
+
+The same calculation can be inspected numerically in Python:
+
+~~~python
+x = np.array([0.5, -1.0])
+a0 = prepend_bias_term(x)
+
+theta_hidden = np.array([
+    [0.2, 0.4, -0.6],
+    [-0.5, 0.8, 0.3],
+])
+z1 = theta_hidden @ a0
+a1 = prepend_bias_term(sigmoid(z1))
+
+theta_output = np.array([[0.1, 0.7, -0.2]])
+z2 = theta_output @ a1
+p = sigmoid(z2)
+
+print('a0 =', a0)  # [1.     0.5    -1.    ]
+print('theta_hidden =\n', theta_hidden)
+print('z1 =', z1)  # [ 1.  -0.4]
+print('a1 =', a1)  # [1.     0.7311 0.4013]
+print('theta_output =', theta_output)
+print('z2 =', z2)  # [0.5315]
+print('p =', p)    # [0.6298]
+~~~
+
+This example shows the role of each object: the weight matrix transforms one activation vector into preactivation values, sigmoid transforms those values into neuron outputs, and the final output activation becomes the prediction used by the loss function.
+
 The complete forward pass stores all intermediate activations. They are needed later because backpropagation applies the chain rule through each layer.
 
 ~~~python
