@@ -235,6 +235,17 @@ $$
 \approx 1.0362.
 $$
 
+The curves below show why log loss is useful. It gives a small penalty to confident correct predictions, but a rapidly increasing penalty to confident incorrect predictions:
+
+```mermaid
+xychart-beta
+    title "Binary cross-entropy loss"
+    x-axis "Predicted probability p" [0.01, 0.25, 0.50, 0.75, 0.99]
+    y-axis "Loss" 0 --> 5
+    line "Actual class y = 1" [4.61, 1.39, 0.69, 0.29, 0.01]
+    line "Actual class y = 0" [0.01, 0.29, 0.69, 1.39, 4.61]
+```
+
 ~~~python
 def compute_cost(y_pred: np.ndarray, y_true: np.ndarray) -> float:
     # y_pred is p and y_true is y in the binary cross-entropy equation.
