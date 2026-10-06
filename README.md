@@ -302,36 +302,7 @@ $$
 \boldsymbol{\delta}^{(L)} = \mathbf{p} - \mathbf{y}.
 $$
 
-For one binary prediction, the loss is:
-
-$$
-\mathcal{L}(p,y) = -\left[y\log(p) + (1-y)\log(1-p)\right].
-$$
-
-First differentiate the loss with respect to the prediction $p$:
-
-$$
-\frac{\partial \mathcal{L}}{\partial p}
-= -\frac{y}{p} + \frac{1-y}{1-p}.
-$$
-
-The prediction is produced by a sigmoid, $p=\sigma(z)$, whose derivative is:
-
-$$
-\frac{\partial p}{\partial z} = p(1-p).
-$$
-
-Applying the chain rule gives the derivative with respect to the output preactivation $z$:
-
-$$
-\frac{\partial \mathcal{L}}{\partial z}
-= \frac{\partial \mathcal{L}}{\partial p}
-\frac{\partial p}{\partial z}
-= \left(-\frac{y}{p} + \frac{1-y}{1-p}\right)p(1-p)
-= p-y.
-$$
-
-This final derivative, $p-y$, is the output-layer delta used by backpropagation. It indicates the direction and size of the correction: with $p=0.6452$, it is $-0.3548$ when $y=1$ and $0.6452$ when $y=0$.
+The loss derivative indicates how the output should change to reduce the loss. For sigmoid output with binary cross-entropy, it simplifies to $p-y$, which is the output-layer delta used by backpropagation. Its sign gives the correction direction, and its magnitude gives the size of the error signal.
 
 For a hidden layer, the chain rule gives:
 
