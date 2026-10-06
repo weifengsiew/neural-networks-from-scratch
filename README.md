@@ -437,7 +437,7 @@ This gradient describes how much the loss changes when that particular weight ch
 | $\frac{\partial J}{\partial \Theta^{(l)}_{jk}}$ | The derivative of the loss with respect to one particular weight. It measures how the loss changes when that weight changes slightly, while the other weights remain fixed. |
 | $\nabla_{\Theta^{(l)}}J$ | The matrix of these derivatives for every weight in the layer. Viewed as a vector in parameter space, it points in the direction of steepest increase in loss; gradient descent moves in the opposite direction. |
 
-![Loss landscape with hills, valleys, contours, gradient, and gradient-descent direction](loss_landscape.svg)
+![Loss landscape with concentric contours](loss_landscape.png)
 
 In matrix form, the gradient for a layer is an outer product:
 
