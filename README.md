@@ -561,3 +561,7 @@ We split the dataset into three parts:
 After each epoch, we evaluate the validation loss. If it fails to improve for a chosen number of consecutive epochs, training stops; this is **early stopping**. We restore the weights from the epoch with the lowest validation loss, then evaluate those weights on the test set.
 
 Validation and test loss are more informative than training loss when judging generalization, because they measure performance on instances that were not used to update the weights. The goal of machine learning is not to memorize the training set, but to learn predictions that remain accurate for new, unseen instances.
+
+## 12. Extra reading
+
+Useful next topics include activation functions, alternative optimizers, learning-rate schedules, regularization methods, and convolutional neural networks.
