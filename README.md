@@ -602,6 +602,18 @@ Useful next topics include activation functions, alternative optimizers, learnin
 | Adam | Adapt the step size using moving estimates of gradient and squared gradient | Often converges quickly with little manual tuning | Uses more state and may generalize differently from plain SGD |
 | RMSprop | Scale updates using a moving average of squared gradients | Useful when gradient magnitudes vary across parameters | Still requires learning-rate and decay choices |
 
+### Learning rates
+
+The learning rate controls how far the weights move after each gradient calculation. A useful choice is large enough to make progress but small enough to avoid overshooting a low-loss region.
+
+| Learning rate | Effect on updates | Typical symptom |
+| --- | --- | --- |
+| Small | Makes cautious, stable changes | Loss decreases slowly and training may need more epochs |
+| Moderate | Balances progress and stability | Loss usually decreases steadily |
+| Large | Makes aggressive changes | Loss may oscillate, diverge, or skip over a minimum |
+
+In practice, several candidate learning rates can be tested using the training set while monitoring validation loss. The learning rate that gives stable improvement and the best validation performance is usually preferred.
+
 ### Computer vision and convolutional layers
 
 An image is naturally represented as a matrix of pixel values, or as several matrices when it has multiple colour channels. A standard fully connected network can flatten these matrices into one long vector before passing the values through ordinary hidden layers. For image tasks, convolutional neural networks instead use **convolutional layers** to preserve local spatial structure while learning features.
