@@ -64,9 +64,9 @@ output = sigmoid(np.array([preactivation]))  # [0.7311]
 
 ## 2. The neural network
 
-A neural network is a composition of parameterized functions. Each layer receives an activation vector from the previous layer, computes an affine transformation—a weighted sum of the activations plus a bias—and then applies a nonlinear activation function to the result.
+A neural network contains many layers: the input layer, hidden layers, and output layer. Section 1 described one neuron as a weight vector, a bias, and an activation function. A layer groups many such neurons together.
 
-A **layer** contains many neurons. Each neuron has its own weight vector and bias, so each neuron produces one entry in the layer's output vector. The weight vectors are stacked row by row to form one weight matrix. Matrix multiplication therefore evaluates all neurons in the layer simultaneously:
+Suppose a layer has $q$ neurons and receives the activation vector $\mathbf{a}^{(l-1)}$. Each neuron has its own weight vector. We represent the layer by stacking those weight vectors as the rows of one matrix:
 
 $$
 \Theta^{(l)} =
@@ -80,10 +80,31 @@ $$
 \mathbf{z}^{(l)} = \Theta^{(l)}\mathbf{a}^{(l-1)}.
 $$
 
-Here, $q$ is the number of neurons in the layer. Row $j$ of $\Theta^{(l)}$ contains the weights for neuron $j$, and entry $j$ of $\mathbf{z}^{(l)}$ is that neuron's preactivation. The activation function is then applied element by element:
+Matrix multiplication evaluates every neuron at once. Row $j$ is the weight vector for neuron $j$, so the $j$th entry of the result is that neuron's scalar preactivation:
 
 $$
-\mathbf{a}^{(l)} = \sigma\left(\mathbf{z}^{(l)}\right).
+z^{(l)}_j = \mathbf{w}^{(l)}_j{}^T\mathbf{a}^{(l-1)},
+\qquad
+\mathbf{z}^{(l)} =
+\begin{bmatrix}
+z^{(l)}_1 \\
+z^{(l)}_2 \\
+\vdots \\
+z^{(l)}_q
+\end{bmatrix}.
+$$
+
+The layer collects one scalar output from each neuron into the vector $\mathbf{z}^{(l)}$. It then applies the activation function independently to every entry, producing the layer's output activation vector:
+
+$$
+\mathbf{a}^{(l)} =
+\begin{bmatrix}
+\sigma\left(z^{(l)}_1\right) \\
+\sigma\left(z^{(l)}_2\right) \\
+\vdots \\
+\sigma\left(z^{(l)}_q\right)
+\end{bmatrix}
+= \sigma\left(\mathbf{z}^{(l)}\right).
 $$
 
 ### Running numerical example
