@@ -319,6 +319,18 @@ $$
 \frac{\partial a}{\partial z}.
 $$
 
+For binary cross-entropy with sigmoid activation, the two component derivatives are:
+
+$$
+\frac{\partial \mathcal{L}}{\partial a}
+= -\frac{y}{a} + \frac{1-y}{1-a},
+\qquad
+\frac{\partial a}{\partial z}
+= a(1-a).
+$$
+
+Multiplying them gives the output-layer derivative $\frac{\partial \mathcal{L}}{\partial z}=p-y$.
+
 For a hidden layer, the chain rule gives:
 
 $$
