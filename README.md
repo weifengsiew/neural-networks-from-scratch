@@ -296,13 +296,7 @@ $$
 = \frac{\partial \mathcal{L}}{\partial \mathbf{z}^{(l)}}.
 $$
 
-For a sigmoid output layer with binary cross-entropy, the output delta simplifies to:
-
-$$
-\boldsymbol{\delta}^{(L)} = \mathbf{p} - \mathbf{y}.
-$$
-
-Derivatives attribute changes in loss to changes in network values: $\partial \mathcal{L}/\partial a$ measures sensitivity to an activation, $\partial a/\partial z$ measures how the activation responds to its preactivation, and $\partial \mathcal{L}/\partial z$ combines both through the chain rule. For the output layer, this combined derivative is $p-y$.
+Derivatives attribute changes in loss to changes in network values: $\partial \mathcal{L}/\partial a$ measures sensitivity to an activation, $\partial a/\partial z$ measures how the activation responds to its preactivation, and $\partial \mathcal{L}/\partial z$ combines both through the chain rule.
 
 | Derivative | Meaning |
 | --- | --- |
@@ -330,6 +324,12 @@ $$
 $$
 
 Multiplying them gives the output-layer derivative $\frac{\partial \mathcal{L}}{\partial z}=p-y$.
+
+Therefore, for a sigmoid output layer with binary cross-entropy, the output delta is:
+
+$$
+\boldsymbol{\delta}^{(L)} = \mathbf{p} - \mathbf{y}.
+$$
 
 For a hidden layer, the chain rule gives:
 
