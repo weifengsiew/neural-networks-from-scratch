@@ -163,6 +163,27 @@ print('p =', p)
 
 As described in Section 2, forward propagation applies multiple layers to the input values. Each layer receives the output values from the previous layer and produces its own output values, which become the input to the next layer. The output layer produces the final output values, or predictions. For binary classification, the final output $p$ is interpreted as the predicted probability that $y=1$; the class prediction is $1$ when $p > 0.5$, and $0$ otherwise.
 
+For a three-layer network, the weight matrices could be:
+
+$$
+\Theta^{(1)} =
+\begin{bmatrix}
+0.2 & 0.4 & -0.6 \\
+-0.5 & 0.8 & 0.3
+\end{bmatrix},
+\qquad
+\Theta^{(2)} =
+\begin{bmatrix}
+0.1 & 0.7 & -0.2 \\
+0.4 & -0.3 & 0.6
+\end{bmatrix},
+\qquad
+\Theta^{(3)} =
+\begin{bmatrix}
+-0.2 & 0.5 & 0.8
+\end{bmatrix}.
+$$
+
 ## 4. Loss: comparing predictions with actual values
 
 The network learns by comparing its prediction with the known target. For binary classification, the implementation uses binary cross-entropy:
