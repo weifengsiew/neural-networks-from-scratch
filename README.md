@@ -137,14 +137,6 @@ $$
 \Theta^{(2)} = \begin{bmatrix}0.1 & 0.7 & -0.2\end{bmatrix}.
 $$
 
-The output neuron then computes its own preactivation and prediction:
-
-$$
-z^{(2)} = \Theta^{(2)}\mathbf{a}^{(1)} \approx 0.5315,
-\qquad
-p = \sigma(z^{(2)}) \approx 0.6298.
-$$
-
 In code, these same vectors and matrices are:
 
 ~~~python
