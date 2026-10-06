@@ -568,12 +568,11 @@ Useful next topics include activation functions, alternative optimizers, learnin
 
 ### Loss functions
 
-| Loss function | Typical use | Strength | Limitation |
-| --- | --- | --- | --- |
-| Binary cross-entropy | Binary classification with a probability output | Strongly penalizes confident incorrect predictions | Requires predictions in the interval $(0,1)$ |
-| Multiclass cross-entropy | Multiclass classification with one score/logit per class | Compares the class scores with the true class; softmax probabilities can be reported for interpretation | Requires one output for each class |
-| Mean squared error | Regression with numeric targets | Simple and useful for measuring numerical error | Can produce weaker gradients than cross-entropy in some sigmoid-classification cases |
-| Hinge loss | Margin-based classification | Encourages a margin between classes | Does not directly produce calibrated probabilities |
+| Loss function | Equation | Typical use | Strength | Limitation |
+| --- | --- | --- | --- | --- |
+| Binary cross-entropy | $-\left[y\log(p)+(1-y)\log(1-p)\right]$ | Binary classification with a probability output | Strongly penalizes confident incorrect predictions | Requires predictions in the interval $(0,1)$ |
+| Multiclass cross-entropy | $-\sum_{c=1}^{C} y_c\log(p_c)$ | Multiclass classification with one score/logit per class | Compares the class probabilities with the true class | Requires one output for each class |
+| Mean squared error | $\frac{1}{d}\sum_{j=1}^{d}(y_j-\hat{y}_j)^2$ | Regression with numeric targets | Simple and useful for measuring numerical error | Can produce weaker gradients than cross-entropy in some sigmoid-classification cases |
 
 ### Activation functions
 
@@ -582,7 +581,10 @@ Useful next topics include activation functions, alternative optimizers, learnin
 | Sigmoid | Binary output layer | Produces a probability between 0 and 1 | Can have very small gradients in saturated regions |
 | ReLU | Hidden layers | Simple and usually provides strong gradients for positive inputs | Can become inactive when inputs remain negative |
 | Tanh | Hidden layers | Zero-centred output between -1 and 1 | Can also saturate and produce small gradients |
-| Leaky ReLU | Hidden layers | Keeps a small gradient for negative inputs | Introduces an additional slope choice |
+
+The curves below show the different input-output shapes of the sigmoid, tanh, and ReLU activation functions.
+
+![Sigmoid, tanh, and ReLU activation functions](activation_functions.svg)
 
 ### Batch sizes
 
@@ -612,9 +614,11 @@ The learning rate controls how far the weights move after each gradient calculat
 | Moderate | Balances progress and stability | Loss usually decreases steadily |
 | Large | Makes aggressive changes | Loss may oscillate, diverge, or skip over a minimum |
 
-In practice, several candidate learning rates can be used to train separate models. Choose among them using validation loss and reserve the test set for the final evaluation. The learning rate that gives stable improvement and strong validation performance is usually preferred.
+The diagram illustrates overshooting: a large learning rate can jump past the low-loss minimum, while a smaller learning rate takes more cautious steps toward it.
 
-These comparisons describe common tendencies, not guarantees. The best choice depends on the dataset, architecture, initialization, regularization, and other hyperparameters, so validation experiments are important.
+![Small and large learning rates near a loss minimum](learning_rate_overshooting.svg)
+
+In practice, several candidate learning rates can be used to train separate models. Choose among them using validation loss and reserve the test set for the final evaluation. The learning rate that gives stable improvement and strong validation performance is usually preferred.
 
 ### Computer vision and convolutional layers
 

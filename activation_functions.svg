@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" role="img" aria-labelledby="title desc">
+  <title id="title">Sigmoid, tanh, and ReLU activation functions</title>
+  <desc id="desc">A plot comparing the sigmoid, tanh, and ReLU curves. Sigmoid and tanh saturate, while ReLU is zero for negative inputs and grows linearly for positive inputs.</desc>
+  <rect width="760" height="430" fill="#ffffff"/>
+  <text x="380" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="600" fill="#1f2937">Activation functions</text>
+  <line x1="90" y1="288" x2="690" y2="288" stroke="#374151" stroke-width="2"/>
+  <line x1="90" y1="70" x2="90" y2="350" stroke="#374151" stroke-width="2"/>
+  <text x="690" y="318" text-anchor="end" font-family="Arial, sans-serif" font-size="15" fill="#374151">input z</text>
+  <text x="60" y="78" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#374151" transform="rotate(-90 60 78)">activation</text>
+  <text x="82" y="293" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#6b7280">0</text>
+  <text x="82" y="242" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#6b7280">1</text>
+  <text x="82" y="340" text-anchor="end" font-family="Arial, sans-serif" font-size="13" fill="#6b7280">−1</text>
+  <text x="90" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#6b7280">−4</text>
+  <text x="385" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#6b7280">0</text>
+  <text x="680" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#6b7280">4</text>
+
+  <path d="M90 287 C155 286 205 278 245 273 C305 266 345 262 385 262 C450 258 515 246 575 241 C620 238 655 238 680 238" fill="none" stroke="#2563eb" stroke-width="4"/>
+  <path d="M90 340 C150 339 205 337 245 327 C305 315 350 296 385 288 C420 280 465 260 525 244 C580 237 630 236 680 236" fill="none" stroke="#c2410c" stroke-width="4"/>
+  <path d="M90 288 L385 288 L680 101" fill="none" stroke="#16803c" stroke-width="4"/>
+
+  <line x1="110" y1="400" x2="145" y2="400" stroke="#2563eb" stroke-width="4"/>
+  <text x="155" y="405" font-family="Arial, sans-serif" font-size="15" fill="#1f2937">sigmoid</text>
+  <line x1="250" y1="400" x2="285" y2="400" stroke="#c2410c" stroke-width="4"/>
+  <text x="295" y="405" font-family="Arial, sans-serif" font-size="15" fill="#1f2937">tanh</text>
+  <line x1="370" y1="400" x2="405" y2="400" stroke="#16803c" stroke-width="4"/>
+  <text x="415" y="405" font-family="Arial, sans-serif" font-size="15" fill="#1f2937">ReLU</text>
+</svg>

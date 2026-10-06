@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" role="img" aria-labelledby="title desc">
+  <title id="title">Learning rate and overshooting</title>
+  <desc id="desc">A bowl-shaped loss curve compares cautious small learning-rate steps with large steps that overshoot the minimum.</desc>
+  <defs>
+    <marker id="green-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#16803c"/></marker>
+    <marker id="red-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/></marker>
+  </defs>
+  <rect width="760" height="430" fill="#ffffff"/>
+  <text x="380" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="600" fill="#1f2937">Learning rate and overshooting</text>
+  <line x1="90" y1="350" x2="690" y2="350" stroke="#374151" stroke-width="2"/>
+  <line x1="90" y1="350" x2="90" y2="70" stroke="#374151" stroke-width="2"/>
+  <text x="690" y="380" text-anchor="end" font-family="Arial, sans-serif" font-size="15" fill="#374151">weight value</text>
+  <text x="58" y="78" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#374151" transform="rotate(-90 58 78)">loss</text>
+
+  <path d="M105 105 C175 185 245 275 385 320 C525 275 595 185 675 105" fill="none" stroke="#6b7280" stroke-width="4"/>
+  <line x1="385" y1="320" x2="385" y2="350" stroke="#6b7280" stroke-dasharray="5 5"/>
+  <circle cx="385" cy="320" r="6" fill="#16803c"/>
+  <text x="397" y="338" font-family="Arial, sans-serif" font-size="15" fill="#166534">minimum loss</text>
+
+  <circle cx="190" cy="202" r="7" fill="#16803c"/>
+  <line x1="190" y1="202" x2="260" y2="254" stroke="#16803c" stroke-width="3" marker-end="url(#green-arrow)"/>
+  <circle cx="260" cy="254" r="5" fill="#16803c"/>
+  <line x1="260" y1="254" x2="315" y2="291" stroke="#16803c" stroke-width="3" marker-end="url(#green-arrow)"/>
+  <circle cx="315" cy="291" r="5" fill="#16803c"/>
+  <line x1="315" y1="291" x2="355" y2="312" stroke="#16803c" stroke-width="3" marker-end="url(#green-arrow)"/>
+  <text x="115" y="170" font-family="Arial, sans-serif" font-size="15" font-weight="600" fill="#16803c">small learning rate</text>
+  <text x="115" y="188" font-family="Arial, sans-serif" font-size="14" fill="#374151">small, cautious steps</text>
+
+  <circle cx="190" cy="202" r="7" fill="#dc2626"/>
+  <line x1="190" y1="202" x2="530" y2="278" stroke="#dc2626" stroke-width="3" marker-end="url(#red-arrow)"/>
+  <circle cx="530" cy="278" r="6" fill="#dc2626"/>
+  <line x1="530" y1="278" x2="245" y2="255" stroke="#dc2626" stroke-width="3" stroke-dasharray="8 5" marker-end="url(#red-arrow)"/>
+  <text x="500" y="185" font-family="Arial, sans-serif" font-size="15" font-weight="600" fill="#dc2626">large learning rate</text>
+  <text x="500" y="203" font-family="Arial, sans-serif" font-size="14" fill="#374151">overshoots the minimum</text>
+</svg>
