@@ -86,40 +86,6 @@ $$
 \mathbf{a}^{(l)} = \sigma\left(\mathbf{z}^{(l)}\right).
 $$
 
-For layer $l$, let:
-
-- $\mathbf{a}^{(l-1)}$ be the incoming activations;
-- $\Theta^{(l)}$ be the layer's weight matrix, including bias weights;
-- $\mathbf{z}^{(l)}$ be the preactivation values; and
-- $\mathbf{a}^{(l)}$ be the output activations.
-
-The layer computes:
-
-$$
-\mathbf{z}^{(l)} = \Theta^{(l)}\mathbf{a}^{(l-1)},
-\qquad
-\mathbf{a}^{(l)} = \sigma\left(\mathbf{z}^{(l)}\right),
-$$
-
-where the sigmoid activation is:
-
-$$
-\sigma(z) = \frac{1}{1 + e^{-z}}.
-$$
-
-The weights and biases are the parameters learned from data. The implementation uses a bias convention in which a leading `1.0` is inserted into every input activation. The first column of each weight matrix therefore contains the bias weights.
-
-~~~python
-def sigmoid(preactivation: np.ndarray) -> np.ndarray:
-    # Convert each preactivation z into a value between 0 and 1.
-    return 1 / (1 + np.exp(-preactivation))
-
-
-def prepend_bias_term(activation: np.ndarray) -> np.ndarray:
-    # The leading 1 lets the first column of theta act as a bias vector.
-    return np.insert(activation, 0, 1.0)
-~~~
-
 ### Running numerical example
 
 To make the symbols concrete, use one two-feature instance and a small network with two hidden neurons and one output neuron. We will reuse these numbers as each theoretical step is introduced:
