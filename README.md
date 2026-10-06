@@ -547,19 +547,3 @@ for iteration in range(num_iterations):       # One iteration is one epoch.
 ~~~
 
 Shuffling changes which instances share a batch, but not the number of instances processed per epoch. Increasing the batch size usually means fewer updates per epoch; increasing the number of epochs means more complete passes over the same training data.
-
-## Project layout
-
-~~~text
-neural_network.py          neural-network implementation
-parkinsons_demo.ipynb      training and evaluation demonstration
-data/                      fixed Parkinson's train/test split
-~~~
-
-## Setup
-
-~~~bash
-python -m pip install -r requirements.txt
-~~~
-
-Open [`parkinsons_demo.ipynb`](parkinsons_demo.ipynb) and run all cells. The notebook standardizes features using training data only, trains the network, and reports test accuracy and F1 score.
