@@ -91,9 +91,7 @@ $$
 \begin{bmatrix}
 0.2 & 0.4 & -0.6 \\
 -0.5 & 0.8 & 0.3
-\end{bmatrix},
-\qquad
-\Theta^{(2)} = \begin{bmatrix}0.1 & 0.7 & -0.2\end{bmatrix}.
+\end{bmatrix}.
 $$
 
 The first row contains the weights for the first hidden neuron, and the second row contains the weights for the second hidden neuron. Now introduce one two-feature input instance:
@@ -128,6 +126,23 @@ $$
 \sigma(\mathbf{z}^{(1)})
 \approx
 \begin{bmatrix}0.7311 \\ 0.4013\end{bmatrix}.
+$$
+
+The hidden layer's output, with a new bias entry prepended, now becomes the input to the output neuron:
+
+$$
+\mathbf{a}^{(1)} \approx
+\begin{bmatrix}1 \\ 0.7311 \\ 0.4013\end{bmatrix},
+\qquad
+\Theta^{(2)} = \begin{bmatrix}0.1 & 0.7 & -0.2\end{bmatrix}.
+$$
+
+The output neuron then computes its own preactivation and prediction:
+
+$$
+z^{(2)} = \Theta^{(2)}\mathbf{a}^{(1)} \approx 0.5315,
+\qquad
+p = \sigma(z^{(2)}) \approx 0.6298.
 $$
 
 In code, these same vectors and matrices are:
