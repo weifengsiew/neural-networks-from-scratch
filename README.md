@@ -319,6 +319,8 @@ $$
 \sigma'(z) = \sigma(z)(1-\sigma(z)).
 $$
 
+The sigmoid derivative describes how much a neuron's activation changes when its preactivation $z$ changes slightly. It is largest when the activation is near $0.5$ and small when the activation is near $0$ or $1$, so it controls how strongly the error signal passes through each hidden neuron.
+
 The code applies this equation from the output layer backward. `delta_current[1:]` removes the bias position because bias activations are not neurons that need a previous-layer error signal.
 
 ~~~python
