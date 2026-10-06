@@ -293,7 +293,7 @@ Backpropagation computes the derivative of the loss with respect to every layer'
 
 $$
 \boldsymbol{\delta}^{(l)}
-= \frac{\partial J}{\partial \mathbf{z}^{(l)}}.
+= \frac{\partial \mathcal{L}}{\partial \mathbf{z}^{(l)}}.
 $$
 
 For a sigmoid output layer with binary cross-entropy, the output delta simplifies to:
@@ -302,13 +302,13 @@ $$
 \boldsymbol{\delta}^{(L)} = \mathbf{p} - \mathbf{y}.
 $$
 
-Derivatives attribute changes in loss to changes in network values: $\partial J/\partial a$ measures sensitivity to an activation, $\partial a/\partial z$ measures how the activation responds to its preactivation, and $\partial J/\partial z$ combines both through the chain rule. For the output layer, this combined derivative is $p-y$.
+Derivatives attribute changes in loss to changes in network values: $\partial \mathcal{L}/\partial a$ measures sensitivity to an activation, $\partial a/\partial z$ measures how the activation responds to its preactivation, and $\partial \mathcal{L}/\partial z$ combines both through the chain rule. For the output layer, this combined derivative is $p-y$.
 
 | Derivative | Meaning |
 | --- | --- |
-| $\frac{\partial J}{\partial a}$ | How the loss changes when an activation changes. |
+| $\frac{\partial \mathcal{L}}{\partial a}$ | How the loss changes when an activation changes. |
 | $\frac{\partial a}{\partial z}$ | How the activation changes when the preactivation changes. |
-| $\frac{\partial J}{\partial z}$ | How the loss changes when the preactivation changes, combining both effects through the chain rule. |
+| $\frac{\partial \mathcal{L}}{\partial z}$ | How the loss changes when the preactivation changes, combining both effects through the chain rule. |
 
 For a hidden layer, the chain rule gives:
 
