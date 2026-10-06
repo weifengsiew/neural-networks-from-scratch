@@ -322,7 +322,7 @@ $$
 | $\frac{\partial a}{\partial z}$ | How the activation changes when the preactivation changes. |
 | $\frac{\partial \mathcal{L}}{\partial z}$ | How the loss changes when the preactivation changes, combining both effects through the chain rule. |
 
-Therefore, for a sigmoid output layer with binary cross-entropy, the output delta is:
+As shown above, for a sigmoid output layer with binary cross-entropy, the output delta is:
 
 $$
 \boldsymbol{\delta}^{(L)} = \mathbf{p} - \mathbf{y}.
