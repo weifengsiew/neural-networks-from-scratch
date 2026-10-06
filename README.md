@@ -316,12 +316,6 @@ $$
 = p-y.
 $$
 
-| Derivative | Meaning |
-| --- | --- |
-| $\frac{\partial \mathcal{L}}{\partial a}$ | How the loss changes when an activation changes. |
-| $\frac{\partial a}{\partial z}$ | How the activation changes when the preactivation changes. |
-| $\frac{\partial \mathcal{L}}{\partial z}$ | How the loss changes when the preactivation changes, combining both effects through the chain rule. |
-
 ### Output layer
 
 As shown above, for a sigmoid output layer with binary cross-entropy, the output delta is:
@@ -353,6 +347,12 @@ $$
 $$
 
 The code applies this equation from the output layer backward. `delta_current[1:]` removes the bias position because bias activations are not neurons that need a previous-layer error signal.
+
+| Derivative | Meaning |
+| --- | --- |
+| $\frac{\partial \mathcal{L}}{\partial a}$ | How the loss changes when an activation changes. |
+| $\frac{\partial a}{\partial z}$ | How the activation changes when the preactivation changes. |
+| $\frac{\partial \mathcal{L}}{\partial z}$ | How the loss changes when the preactivation changes, combining both effects through the chain rule. |
 
 ~~~python
 def compute_deltas(thetas, y_pred, y_true, layers_activations):
