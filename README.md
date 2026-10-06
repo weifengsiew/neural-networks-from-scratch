@@ -338,6 +338,7 @@ For a hidden layer, the chain rule gives:
 
 $$
 \boldsymbol{\delta}^{(l)}
+= \frac{\partial \mathcal{L}}{\partial \mathbf{z}^{(l)}}
 = \left((\Theta^{(l+1)})^T
 \boldsymbol{\delta}^{(l+1)}\right)
 \odot \sigma'\left(\mathbf{z}^{(l)}\right),
@@ -346,7 +347,9 @@ $$
 and the sigmoid derivative is:
 
 $$
-\sigma'(z) = \sigma(z)(1-\sigma(z)).
+\sigma'(z)
+= \frac{\partial a}{\partial z}
+= \sigma(z)(1-\sigma(z)).
 $$
 
 The code applies this equation from the output layer backward. `delta_current[1:]` removes the bias position because bias activations are not neurons that need a previous-layer error signal.
