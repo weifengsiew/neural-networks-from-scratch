@@ -511,6 +511,7 @@ def _update_weights(self, gradients, step_size):
 
 - An **instance** is one feature vector and its target $(\mathbf{x}_i,y_i)$.
 - A **batch** is a group of instances processed before one update.
+- After each batch, the weights are updated once.
 - An **epoch** is one complete pass through all training instances.
 - A **weight update** changes every weight matrix once.
 
