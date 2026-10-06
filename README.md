@@ -296,8 +296,6 @@ $$
 = \frac{\partial \mathcal{L}}{\partial \mathbf{z}^{(l)}}.
 $$
 
-Derivatives attribute changes in loss to changes in network values: $\partial \mathcal{L}/\partial a$ measures sensitivity to an activation, $\partial a/\partial z$ measures how the activation responds to its preactivation, and $\partial \mathcal{L}/\partial z$ combines both through the chain rule.
-
 The table's three quantities are connected by the chain rule:
 
 $$
