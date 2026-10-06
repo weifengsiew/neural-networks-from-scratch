@@ -68,39 +68,38 @@ A neural network contains many layers: the input layer, hidden layers, and outpu
 
 ```mermaid
 flowchart LR
-    subgraph input["Input: a⁽⁰⁾ = [1, x₁, x₂]ᵀ"]
-        b0((1))
-        x1((x₁))
-        x2((x₂))
+    subgraph input["Input layer"]
+        i1((Input 1))
+        i2((Input 2))
     end
-    subgraph hidden["Hidden activations: a⁽¹⁾"]
-        h1((a₁⁽¹⁾))
-        h2((a₂⁽¹⁾))
+    subgraph hidden["Hidden layer"]
+        h1((Neuron 1))
+        h2((Neuron 2))
+        h3((Neuron 3))
     end
-    subgraph output["Output prediction"]
-        b2((1))
-        o((p))
+    subgraph output["Output layer"]
+        o((Prediction))
     end
 
-    b0 -->|Θ⁽¹⁾₁₀| h1
-    b0 -->|Θ⁽¹⁾₂₀| h2
-    x1 -->|Θ⁽¹⁾₁₁| h1
-    x1 -->|Θ⁽¹⁾₂₁| h2
-    x2 -->|Θ⁽¹⁾₁₂| h1
-    x2 -->|Θ⁽¹⁾₂₂| h2
-    b2 -->|Θ⁽²⁾₁₀| o
-    h1 -->|Θ⁽²⁾₁₁| o
-    h2 -->|Θ⁽²⁾₁₂| o
+    i1 --> h1
+    i1 --> h2
+    i1 --> h3
+    i2 --> h1
+    i2 --> h2
+    i2 --> h3
+    h1 --> o
+    h2 --> o
+    h3 --> o
 
     classDef input fill:#e8f1ff,stroke:#356ae6,color:#111;
     classDef hidden fill:#e9f8ed,stroke:#2f8f46,color:#111;
     classDef output fill:#fff1d6,stroke:#c77b00,color:#111;
-    class x1,x2,b0 input;
-    class h1,h2 hidden;
-    class o,b2 output;
+    class i1,i2 input;
+    class h1,h2,h3 hidden;
+    class o output;
 ```
 
-Each circle is a neuron or a bias activation. The arrows carry activations between layers; each arrow has its own weight, represented by one entry of the layer matrix. For example, $\Theta^{(1)}_{11}$ connects $x_1$ to the first hidden neuron, while $\Theta^{(1)}_{21}$ connects $x_1$ to the second hidden neuron. The matrix representation below stores all of these weights at once.
+Each circle represents a neuron. The arrows show information flowing from the input layer, through the hidden layer, to the output layer. The matrix representation below shows how the neurons in one layer are represented together.
 
 Suppose a layer has $q$ neurons and receives the activation vector $\mathbf{a}^{(l-1)}$ as input values. Each neuron has its own weight vector. We represent the layer by stacking those weight vectors as the rows of one matrix:
 
