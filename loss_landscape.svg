@@ -2,6 +2,7 @@
   <title id="title">Loss landscape with concentric contours and gradient descent</title>
   <desc id="desc">Concentric loss contours surround a minimum. The gradient points toward higher loss and the negative gradient points toward the minimum.</desc>
   <defs>
+    <clipPath id="plot-area"><rect x="95" y="90" width="595" height="300"/></clipPath>
     <marker id="axis-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker>
     <marker id="gradient-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/></marker>
     <marker id="descent-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#16803c"/></marker>
@@ -15,17 +16,17 @@
   <text x="685" y="418" text-anchor="end" font-family="Arial, sans-serif" font-size="15" fill="#374151">weight 1</text>
   <text x="62" y="102" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#374151" transform="rotate(-90 62 102)">weight 2</text>
 
-  <g fill="none" stroke="#9ca3af" stroke-width="2">
-    <circle cx="470" cy="255" r="170"/>
-    <circle cx="470" cy="255" r="135"/>
-    <circle cx="470" cy="255" r="102"/>
-    <circle cx="470" cy="255" r="72"/>
-    <circle cx="470" cy="255" r="44"/>
-    <circle cx="470" cy="255" r="18"/>
+  <g clip-path="url(#plot-area)" fill="none" stroke="#9ca3af" stroke-width="2">
+    <circle cx="390" cy="250" r="350"/>
+    <circle cx="390" cy="250" r="285"/>
+    <circle cx="390" cy="250" r="225"/>
+    <circle cx="390" cy="250" r="170"/>
+    <circle cx="390" cy="250" r="120"/>
+    <circle cx="390" cy="250" r="75"/>
   </g>
-  <text x="592" y="125" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">higher loss</text>
-  <circle cx="470" cy="255" r="5" fill="#16803c"/>
-  <text x="480" y="260" font-family="Arial, sans-serif" font-size="14" fill="#374151">minimum</text>
+  <text x="600" y="115" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">higher loss</text>
+  <circle cx="390" cy="250" r="5" fill="#16803c"/>
+  <text x="400" y="255" font-family="Arial, sans-serif" font-size="14" fill="#374151">minimum</text>
 
   <circle cx="310" cy="145" r="7" fill="#2563eb"/>
   <text x="320" y="142" font-family="Arial, sans-serif" font-size="15" fill="#1f2937">current weights</text>
