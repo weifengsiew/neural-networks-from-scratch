@@ -14,15 +14,7 @@ z = \sum_{k=1}^{n} w_k a_k + b,
 a = \sigma(z).
 $$
 
-For a simple numerical example, use inputs $a_1=0.5$ and $a_2=-1.0$, weights $w_1=0.4$ and $w_2=-0.6$, and bias $b=0.2$:
-
-$$
-z = 0.4(0.5) + (-0.6)(-1.0) + 0.2 = 1.0,
-\qquad
-a = \sigma(1.0) \approx 0.7311.
-$$
-
-The same calculation written with vectors makes the data flow clearer:
+For a numerical example, use these input and weight vectors:
 
 $$
 \mathbf{a} =
@@ -34,7 +26,7 @@ $$
 b = 0.2.
 $$
 
-The neuron takes the dot product of the weight and input vectors, adds the scalar bias, and applies the activation function:
+The neuron takes their dot product, adds the scalar bias, and applies the activation function:
 
 $$
 z = \mathbf{w}^{T}\mathbf{a} + b
@@ -44,7 +36,7 @@ z = \mathbf{w}^{T}\mathbf{a} + b
 + 0.2
 = 1.0,
 \qquad
-a = \sigma(z) \approx 0.7311.
+a = \sigma(z).
 $$
 
 The sigmoid equation used by the neuron is:
@@ -53,7 +45,7 @@ $$
 \sigma(z) = \frac{1}{1 + e^{-z}}.
 $$
 
-For this example, the preactivation is $z=1.0$, so:
+For this example, $z=1.0$, so:
 
 $$
 a = \sigma(1.0)
