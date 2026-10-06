@@ -47,11 +47,11 @@ The neuron takes their dot product, adds the scalar bias, and applies the activa
 
 $$
 z = \mathbf{w}^{T}\mathbf{a} + b
-=
+{}=
 \begin{bmatrix}0.4 & -0.6\end{bmatrix}
 \begin{bmatrix}0.5 \\ -1.0\end{bmatrix}
-+ 0.2
-= 1.0,
+{}+ 0.2
+{}= 1.0,
 \qquad
 a = \sigma(z).
 $$
@@ -158,13 +158,13 @@ Multiplying the hidden matrix by this activation vector computes both neurons' p
 
 $$
 \mathbf{z}^{(1)} = \Theta^{(1)}\mathbf{a}^{(0)}
-=
+{}=
 \begin{bmatrix}
 0.2 & 0.4 & -0.6 \\
 -0.5 & 0.8 & 0.3
 \end{bmatrix}
 \begin{bmatrix}1 \\ 0.5 \\ -1.0\end{bmatrix}
-=
+{}=
 \begin{bmatrix}1.0 \\ -0.4\end{bmatrix}.
 $$
 
@@ -316,7 +316,7 @@ The implementation can add L2 regularization to discourage large non-bias weight
 
 $$
 J = J_{\text{data}}
-+ \frac{\lambda}{2m}\sum_l\sum_{j,k>0}
+{}+ \frac{\lambda}{2m}\sum_l\sum_{j,k>0}
 \left(\Theta^{(l)}_{jk}\right)^2.
 $$
 
@@ -358,7 +358,7 @@ Applying the chain rule, multiplying these two derivatives gives:
 
 $$
 \frac{\partial \mathcal{L}}{\partial z}
-=
+{}=
 \frac{\partial \mathcal{L}}{\partial a}
 \frac{\partial a}{\partial z}
 = p-y.
@@ -496,7 +496,7 @@ Once the gradient is known, gradient descent changes every parameter according t
 $$
 \Theta^{(l)}_{\text{new}}
 = \Theta^{(l)}_{\text{old}}
-- \eta\nabla_{\Theta^{(l)}}J,
+{}- \eta\nabla_{\Theta^{(l)}}J,
 $$
 
 where $\eta$ is the step size, or learning rate. The minus sign moves the parameters opposite to the direction in which the loss increases.
