@@ -310,6 +310,15 @@ Derivatives attribute changes in loss to changes in network values: $\partial \m
 | $\frac{\partial a}{\partial z}$ | How the activation changes when the preactivation changes. |
 | $\frac{\partial \mathcal{L}}{\partial z}$ | How the loss changes when the preactivation changes, combining both effects through the chain rule. |
 
+The table's three quantities are connected by the chain rule:
+
+$$
+\frac{\partial \mathcal{L}}{\partial z}
+=
+\frac{\partial \mathcal{L}}{\partial a}
+\frac{\partial a}{\partial z}.
+$$
+
 For a hidden layer, the chain rule gives:
 
 $$
