@@ -184,6 +184,28 @@ $$
 \end{bmatrix}.
 $$
 
+Using $\mathbf{a}^{(0)} = [1, 0.5, -1]^T$ and applying sigmoid after each layer:
+
+$$
+\mathbf{z}^{(1)} = \Theta^{(1)}\mathbf{a}^{(0)}
+= \begin{bmatrix}1.0 \\ -0.4\end{bmatrix},
+\qquad
+\mathbf{a}^{(1)} = \begin{bmatrix}1 \\ 0.7311 \\ 0.4013\end{bmatrix},
+$$
+
+$$
+\mathbf{z}^{(2)} = \Theta^{(2)}\mathbf{a}^{(1)}
+\approx \begin{bmatrix}0.5315 \\ 0.4215\end{bmatrix},
+\qquad
+\mathbf{a}^{(2)} \approx \begin{bmatrix}1 \\ 0.6298 \\ 0.6038\end{bmatrix},
+$$
+
+$$
+z^{(3)} = \Theta^{(3)}\mathbf{a}^{(2)} \approx 0.5980,
+\qquad
+p = \sigma(z^{(3)}) \approx 0.6452.
+$$
+
 ## 4. Loss: comparing predictions with actual values
 
 The network learns by comparing its prediction with the known target. For binary classification, the implementation uses binary cross-entropy:
