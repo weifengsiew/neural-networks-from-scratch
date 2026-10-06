@@ -66,7 +66,7 @@ output = sigmoid(np.array([preactivation]))  # [0.7311]
 
 A neural network contains many layers: the input layer, hidden layers, and output layer. Section 1 described one neuron as a weight vector, a bias, and an activation function. A layer groups many such neurons together.
 
-Suppose a layer has $q$ neurons and receives the activation vector $\mathbf{a}^{(l-1)}$. Each neuron has its own weight vector. We represent the layer by stacking those weight vectors as the rows of one matrix:
+Suppose a layer has $q$ neurons and receives the activation vector $\mathbf{a}^{(l-1)}$ as input values. Each neuron has its own weight vector. We represent the layer by stacking those weight vectors as the rows of one matrix:
 
 $$
 \Theta^{(l)} =
@@ -79,6 +79,8 @@ $$
 \qquad
 \mathbf{z}^{(l)} = \Theta^{(l)}\mathbf{a}^{(l-1)}.
 $$
+
+The first row of $\Theta^{(l)}$ represents the first neuron, the second row represents the second neuron, and so on. The matrix product collects the preactivation produced by each neuron into the vector $\mathbf{z}^{(l)}$.
 
 ### Running numerical example
 
