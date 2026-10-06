@@ -66,6 +66,28 @@ output = sigmoid(np.array([preactivation]))  # [0.7311]
 
 A neural network contains many layers: the input layer, hidden layers, and output layer. Section 1 described one neuron as a weight vector, a bias, and an activation function. A layer groups many such neurons together.
 
+```mermaid
+flowchart LR
+    x1((x₁)) --> h1((h₁))
+    x1 --> h2((h₂))
+    x2((x₂)) --> h1
+    x2 --> h2
+    b1((bias)) --> h1
+    b1 --> h2
+    h1 --> o((output))
+    h2 --> o
+    b2((bias)) --> o
+
+    classDef input fill:#e8f1ff,stroke:#356ae6,color:#111;
+    classDef hidden fill:#e9f8ed,stroke:#2f8f46,color:#111;
+    classDef output fill:#fff1d6,stroke:#c77b00,color:#111;
+    class x1,x2,b1 input;
+    class h1,h2 hidden;
+    class o,b2 output;
+```
+
+Each circle is a neuron. The arrows carry activations between layers; each neuron combines its incoming activations using its own weights and bias before applying the activation function. The matrix representation below stores the weights for all neurons in a layer at once.
+
 Suppose a layer has $q$ neurons and receives the activation vector $\mathbf{a}^{(l-1)}$ as input values. Each neuron has its own weight vector. We represent the layer by stacking those weight vectors as the rows of one matrix:
 
 $$
@@ -385,6 +407,10 @@ def compute_deltas(thetas, y_pred, y_true, layers_activations):
 ~~~
 
 ## 7. Gradients: how deltas become weight derivatives
+
+The loss can be viewed as a surface over the model's weights. The closed curves below are contours: every point on one curve has the same loss. At the current weights, the gradient points toward the steepest increase in loss, so the gradient-descent update moves in the opposite direction toward lower-loss contours.
+
+![Loss landscape with contours, gradient, and gradient-descent direction](loss_landscape.svg)
 
 For a weight connecting activation $a_k^{(l-1)}$ to neuron $j$ in layer $l$, the chain rule gives:
 
