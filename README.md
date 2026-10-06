@@ -317,13 +317,13 @@ $$
 = a(1-a).
 $$
 
+Multiplying them gives the output-layer derivative $\frac{\partial \mathcal{L}}{\partial z}=p-y$.
+
 | Derivative | Meaning |
 | --- | --- |
 | $\frac{\partial \mathcal{L}}{\partial a}$ | How the loss changes when an activation changes. |
 | $\frac{\partial a}{\partial z}$ | How the activation changes when the preactivation changes. |
 | $\frac{\partial \mathcal{L}}{\partial z}$ | How the loss changes when the preactivation changes, combining both effects through the chain rule. |
-
-Multiplying them gives the output-layer derivative $\frac{\partial \mathcal{L}}{\partial z}=p-y$.
 
 Therefore, for a sigmoid output layer with binary cross-entropy, the output delta is:
 
