@@ -274,22 +274,7 @@ $$
 
 The condition $k>0$ excludes the first, bias-weight column.
 
-For a non-bias weight $\theta$, the L2 penalty contribution is:
-
-$$
-\frac{\lambda}{2m}\theta^2.
-$$
-
-When $\theta=0$, this contribution is zero, and its regularization gradient is also zero:
-
-$$
-\frac{\partial}{\partial\theta}
-\left(\frac{\lambda}{2m}\theta^2\right)
-= \frac{\lambda}{m}\theta
-= 0.
-$$
-
-A zero weight also means that the corresponding input has no direct effect on that neuron's weighted sum through this connection. Penalizing large weights therefore encourages the network to prefer smaller, simpler contributions unless a large weight substantially improves the data loss. This can reduce sensitivity to noise and help prevent overfitting.
+For a non-bias weight $\theta$, the penalty is proportional to $\theta^2$. When $\theta=0$, both the penalty and its regularization gradient are zero, and that connection contributes nothing to the neuron's weighted sum. Penalizing large weights encourages simpler models and helps reduce overfitting.
 
 ~~~python
 def regularize_and_average_cost(thetas, total_cost, regularization_strength, num_instances):
