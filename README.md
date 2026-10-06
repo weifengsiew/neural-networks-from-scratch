@@ -356,25 +356,28 @@ The code applies this equation from the output layer backward. `delta_current[1:
 
 ~~~python
 def compute_deltas(thetas, y_pred, y_true, layers_activations):
-    # For sigmoid plus binary cross-entropy: delta^(L) = p - y.
+    # Output-layer equation above:
+    # delta^(L) = dL/dz^(L) = p - y.
     output_layer_delta = y_pred - y_true
     deltas = [output_layer_delta]
 
-    # Walk backward through the hidden layers.
+    # Move backward through hidden layers using:
+    # delta^(l) = ((Theta^(l+1)).T @ delta^(l+1)) * sigma'(z^(l)).
     for theta_next, activation_current in zip(
         reversed(thetas[1:]), reversed(layers_activations[1:-1])
     ):
+        # Propagate the next layer's error through its transpose weights.
         delta_next = deltas[0]
 
-        # theta_next.T moves the next-layer error back to this layer.
-        # activation_current * (1 - activation_current) is sigma'(z).
+        # Apply the hidden-layer chain rule from the subsection above.
+        # activation_current * (1 - activation_current) is sigma'(z^(l)).
         delta_current = (
             (theta_next.T @ delta_next)
             * activation_current
             * (1 - activation_current)
         )
 
-        # The first entry corresponds to the bias activation; remove it.
+        # Remove the bias entry: biases are not previous-layer neurons.
         delta_current = delta_current[1:]
         deltas.insert(0, delta_current)
 
