@@ -521,7 +521,7 @@ $$
 \text{updates per epoch} = \left\lceil\frac{N}{B}\right\rceil.
 $$
 
-For the demonstration, $N=156$ and $B=32$, so there are **5 weight updates per epoch**: $\lceil156/32\rceil=5$, consisting of four batches of 32 and one final batch of 28. One instance contributes a gradient; the batch combines those gradients; the update changes the weights; the next epoch repeats the process with the changed weights.
+For the demonstration, $N=156$ and $B=32$, so there are **5 weight updates per epoch**: $\lceil156/32\rceil=5$, consisting of four batches of 32 and one final batch of 28. Because weights are updated after each batch, each of these five batches produces one weight update. One instance contributes a gradient; the batch combines those gradients; the update changes the weights; the next epoch repeats the process with the changed weights.
 
 ~~~python
 for iteration in range(num_iterations):       # One iteration is one epoch.
