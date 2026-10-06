@@ -1,10 +1,10 @@
 # Neural Networks From Scratch
 
-This repository contains a NumPy feed-forward neural network and a notebook that applies it to the Parkinson's disease dataset. The sections below connect the mathematical training procedure to the corresponding code in [`neural_network.py`](neural_network.py).
+This repository contains feed-forward neural network implemented from scratch and a notebook that applies it to the Parkinson's disease dataset. The sections below explain the theory underlying the feed-forward neural network implementation in [`neural_network.py`](neural_network.py).
 
 ## 1. What is a neural network?
 
-A neural network is a composition of parameterized functions. Each layer receives an activation vector from the previous layer, applies a linear transformation, and then applies a nonlinear activation function.
+A neural network is a composition of parameterized functions. Each layer receives an activation vector from the previous layer, computes an affine transformation—a weighted sum of the activations plus a bias—and then applies a nonlinear activation function to the result.
 
 For layer \(l\), let:
 
