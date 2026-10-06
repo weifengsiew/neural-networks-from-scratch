@@ -430,6 +430,14 @@ $$
 = \delta^{(l)}_j a^{(l-1)}_k.
 $$
 
+For the whole layer, these individual derivatives form a gradient matrix. Because each entry is a product of one delta and one incoming activation, the matrix is an outer product:
+
+$$
+\nabla_{\Theta^{(l)}}J
+= \boldsymbol{\delta}^{(l)}
+\left(\mathbf{a}^{(l-1)}\right)^T.
+$$
+
 This gradient describes how much the loss changes when that particular weight changes slightly.
 
 | Quantity | Meaning |
@@ -438,14 +446,6 @@ This gradient describes how much the loss changes when that particular weight ch
 | $\nabla_{\Theta^{(l)}}J$ | The gradient of the loss with respect to all weights in layer $l$, represented as a matrix of derivatives. Viewed as a vector in parameter space, it points in the direction of steepest increase in loss; gradient descent moves in the opposite direction. |
 
 ![Loss landscape with concentric contours](loss_landscape.png)
-
-In matrix form, the gradient for a layer is an outer product:
-
-$$
-\nabla_{\Theta^{(l)}}J
-= \boldsymbol{\delta}^{(l)}
-\left(\mathbf{a}^{(l-1)}\right)^T.
-$$
 
 The implementation uses `np.outer` to create exactly that matrix:
 
