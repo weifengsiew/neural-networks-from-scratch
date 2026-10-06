@@ -466,7 +466,21 @@ For a batch, the per-instance gradients are summed and then divided by the batch
 
 In practice, libraries such as PyTorch provide loss functions and automatic differentiation to compute the loss and gradients. The manual equations here are mainly useful for understanding what those tools calculate.
 
-## 8. Weight updates: gradient descent
+## 8. Good news: PyTorch can automate the update
+
+PyTorch can calculate the gradients and update the weights for us. After the loss is computed, `loss.backward()` calculates the gradients and `optimizer.step()` applies the gradient-descent update:
+
+~~~python
+optimizer.zero_grad()  # Clear gradients from the previous batch.
+predictions = model(x_batch)
+loss = loss_function(predictions, y_batch)
+loss.backward()        # Compute gradients automatically.
+optimizer.step()       # Update every weight automatically.
+~~~
+
+The manual equations explain what these functions are calculating; PyTorch performs the repetitive derivative and weight-update operations.
+
+## 9. Weight updates: gradient descent
 
 Once the gradient is known, gradient descent changes every parameter according to:
 
@@ -491,7 +505,7 @@ def _update_weights(self, gradients, step_size):
     self.thetas = updated_thetas
 ~~~
 
-## 9. Instances, batches, epochs, and updates
+## 10. Instances, batches, epochs, and updates
 
 - An **instance** is one feature vector and its target $(\mathbf{x}_i,y_i)$.
 - A **batch** is a group of instances processed before one update.
