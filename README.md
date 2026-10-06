@@ -571,8 +571,8 @@ Useful next topics include activation functions, alternative optimizers, learnin
 | Loss function | Typical use | Strength | Limitation |
 | --- | --- | --- | --- |
 | Binary cross-entropy | Binary classification with a probability output | Strongly penalizes confident incorrect predictions | Requires predictions in the interval $(0,1)$ |
-| Multiclass cross-entropy | Multiclass classification with a softmax output | Compares a probability distribution with the true class | Requires one output for each class |
-| Mean squared error | Regression with numeric targets | Simple and useful for measuring numerical error | Can give weak gradients for confident classification errors |
+| Multiclass cross-entropy | Multiclass classification with one score/logit per class | Compares the class scores with the true class; softmax probabilities can be reported for interpretation | Requires one output for each class |
+| Mean squared error | Regression with numeric targets | Simple and useful for measuring numerical error | Can produce weaker gradients than cross-entropy in some sigmoid-classification cases |
 | Hinge loss | Margin-based classification | Encourages a margin between classes | Does not directly produce calibrated probabilities |
 
 ### Activation functions
@@ -588,10 +588,10 @@ Useful next topics include activation functions, alternative optimizers, learnin
 
 | Batch size | Updates per epoch for $N=156$ | Strength | Limitation |
 | --- | ---: | --- | --- |
-| 16 | $\lceil156/16\rceil=10$ | Frequent updates and lower memory use | More updates can make training noisier and slower |
+| 16 | $\lceil156/16\rceil=10$ | Frequent updates and lower memory use | Gradient estimates are noisier and require more updates per epoch |
 | 32 | $\lceil156/32\rceil=5$ | Balanced computation and update frequency | Still gives an approximate rather than exact full-dataset gradient |
-| 64 | $\lceil156/64\rceil=3$ | Fewer, more stable updates | Uses more memory and may generalize less well in some settings |
-| 156 | $\lceil156/156\rceil=1$ | One exact full-dataset gradient per epoch | Each update is expensive and may require more epochs |
+| 64 | $\lceil156/64\rceil=3$ | Fewer, more stable updates | Uses more memory and has less mini-batch noise, which can affect generalization |
+| 156 | $\lceil156/156\rceil=1$ | One exact full-dataset gradient per epoch | Each update is more expensive and there is no mini-batch noise |
 
 ### Optimizers
 
@@ -599,7 +599,7 @@ Useful next topics include activation functions, alternative optimizers, learnin
 | --- | --- | --- | --- |
 | SGD | Subtract a fixed learning-rate multiple of the gradient | Simple and interpretable | Sensitive to the learning rate and can converge slowly |
 | Momentum SGD | Accumulate a moving direction from earlier gradients | Reduces oscillation and can accelerate progress | Requires a momentum hyperparameter |
-| Adam | Adapt the step size using moving estimates of gradient and squared gradient | Often converges quickly with little manual tuning | Uses more state and may generalize differently from plain SGD |
+| Adam | Adapt per-parameter step sizes using moving estimates of the gradient and squared gradient | Often converges quickly | Uses more state and may generalize differently from plain SGD |
 | RMSprop | Scale updates using a moving average of squared gradients | Useful when gradient magnitudes vary across parameters | Still requires learning-rate and decay choices |
 
 ### Learning rates
@@ -612,7 +612,9 @@ The learning rate controls how far the weights move after each gradient calculat
 | Moderate | Balances progress and stability | Loss usually decreases steadily |
 | Large | Makes aggressive changes | Loss may oscillate, diverge, or skip over a minimum |
 
-In practice, several candidate learning rates can be tested using the training set while monitoring validation loss. The learning rate that gives stable improvement and the best validation performance is usually preferred.
+In practice, several candidate learning rates can be used to train separate models. Choose among them using validation loss and reserve the test set for the final evaluation. The learning rate that gives stable improvement and strong validation performance is usually preferred.
+
+These comparisons describe common tendencies, not guarantees. The best choice depends on the dataset, architecture, initialization, regularization, and other hyperparameters, so validation experiments are important.
 
 ### Computer vision and convolutional layers
 
