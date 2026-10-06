@@ -4,14 +4,18 @@ This repository contains feed-forward neural network implemented from scratch an
 
 ## 1. The neuron
 
-A **neuron** is the basic computational unit of a neural network. It consists of weights, a bias, and an activation function. The neuron receives input values, multiplies them by its weights, adds its bias, and transforms the result with its activation function.
-
-For one neuron with inputs $a_1,\ldots,a_n$, weights $w_1,\ldots,w_n$, bias $b$, and activation function $\sigma$, the computation is:
+A **neuron** is the basic computational unit of a neural network. It consists of weights, a bias, and an activation function. For one neuron with weights $w_1,\ldots,w_n$, bias $b$, and activation function $\sigma$, the following computation is applied to input values $a_1,\ldots,a_n$ to return an output $a$:
 
 $$
 z = \sum_{k=1}^{n} w_k a_k + b,
 \qquad
 a = \sigma(z).
+$$
+
+Typically, a sigmoid equation is used for the activation function $\sigma$:
+
+$$
+\sigma(z) = \frac{1}{1 + e^{-z}}.
 $$
 
 For a numerical example, use these input and weight vectors:
@@ -37,12 +41,6 @@ z = \mathbf{w}^{T}\mathbf{a} + b
 = 1.0,
 \qquad
 a = \sigma(z).
-$$
-
-The sigmoid equation used by the neuron is:
-
-$$
-\sigma(z) = \frac{1}{1 + e^{-z}}.
 $$
 
 For this example, $z=1.0$, so:
@@ -142,6 +140,28 @@ $$
 \end{bmatrix},
 \qquad
 \Theta^{(2)} = \begin{bmatrix}0.1 & 0.7 & -0.2\end{bmatrix}.
+$$
+
+The hidden matrix contains two rows because the hidden layer contains two neurons. Multiplying it by the input activation vector computes both neurons' preactivations in one operation:
+
+$$
+\mathbf{z}^{(1)} = \Theta^{(1)}\mathbf{a}^{(0)}
+=
+\begin{bmatrix}
+0.2 & 0.4 & -0.6 \\
+-0.5 & 0.8 & 0.3
+\end{bmatrix}
+\begin{bmatrix}1 \\ 0.5 \\ -1.0\end{bmatrix}
+=
+\begin{bmatrix}1.0 \\ -0.4\end{bmatrix}.
+$$
+
+The first row produces the first neuron's preactivation, and the second row produces the second neuron's preactivation. Applying sigmoid element by element gives:
+
+$$
+\sigma(\mathbf{z}^{(1)})
+\approx
+\begin{bmatrix}0.7311 \\ 0.4013\end{bmatrix}.
 $$
 
 In code, these same vectors and matrices are:
