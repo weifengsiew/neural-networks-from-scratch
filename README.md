@@ -245,6 +245,8 @@ def compute_cost(y_pred: np.ndarray, y_true: np.ndarray) -> float:
     return cost
 ~~~
 
+## 5. Regularizing and averaging cost
+
 For a batch $\mathcal{B}$ containing $m$ instances, the data loss is averaged:
 
 $$
@@ -272,7 +274,7 @@ def regularize_and_average_cost(thetas, total_cost, regularization_strength, num
     return total_cost / num_instances + regularization
 ~~~
 
-## 5. Backpropagation: computing the error signals
+## 6. Backpropagation: computing the error signals
 
 Backpropagation computes the derivative of the loss with respect to every layer's preactivation. Define the delta for layer $l$ as:
 
@@ -331,7 +333,7 @@ def compute_deltas(thetas, y_pred, y_true, layers_activations):
     return deltas
 ~~~
 
-## 6. Gradients: how deltas become weight derivatives
+## 7. Gradients: how deltas become weight derivatives
 
 For a weight connecting activation $a_k^{(l-1)}$ to neuron $j$ in layer $l$, the chain rule gives:
 
@@ -365,7 +367,7 @@ def compute_gradients(activations, deltas):
 
 For a batch, the per-instance gradients are summed and then divided by the batch size. The regularization gradient $\lambda\Theta/m$ is added to non-bias weights before the update.
 
-## 7. Weight updates: gradient descent
+## 8. Weight updates: gradient descent
 
 Once the gradient is known, gradient descent changes every parameter according to:
 
@@ -390,7 +392,7 @@ def _update_weights(self, gradients, step_size):
     self.thetas = updated_thetas
 ~~~
 
-## 8. Instances, batches, epochs, and updates
+## 9. Instances, batches, epochs, and updates
 
 - An **instance** is one feature vector and its target $(\mathbf{x}_i,y_i)$.
 - A **batch** is a group of instances processed before one update.
