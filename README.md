@@ -296,15 +296,6 @@ $$
 = \frac{\partial \mathcal{L}}{\partial \mathbf{z}^{(l)}}.
 $$
 
-The table's three quantities are connected by the chain rule:
-
-$$
-\frac{\partial \mathcal{L}}{\partial z}
-=
-\frac{\partial \mathcal{L}}{\partial a}
-\frac{\partial a}{\partial z}.
-$$
-
 For binary cross-entropy with sigmoid activation, the two component derivatives are:
 
 $$
@@ -315,7 +306,15 @@ $$
 = a(1-a).
 $$
 
-Multiplying them gives the output-layer derivative $\frac{\partial \mathcal{L}}{\partial z}=p-y$.
+Applying the chain rule, multiplying these two derivatives gives:
+
+$$
+\frac{\partial \mathcal{L}}{\partial z}
+=
+\frac{\partial \mathcal{L}}{\partial a}
+\frac{\partial a}{\partial z}
+= p-y.
+$$
 
 | Derivative | Meaning |
 | --- | --- |
