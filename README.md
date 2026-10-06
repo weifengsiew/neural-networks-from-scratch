@@ -304,6 +304,12 @@ $$
 
 Derivatives attribute changes in loss to changes in network values: $\partial J/\partial a$ measures sensitivity to an activation, $\partial a/\partial z$ measures how the activation responds to its preactivation, and $\partial J/\partial z$ combines both through the chain rule. For the output layer, this combined derivative is $p-y$.
 
+| Derivative | Meaning |
+| --- | --- |
+| $\frac{\partial J}{\partial a}$ | How the loss changes when an activation changes. |
+| $\frac{\partial a}{\partial z}$ | How the activation changes when the preactivation changes. |
+| $\frac{\partial J}{\partial z}$ | How the loss changes when the preactivation changes, combining both effects through the chain rule. |
+
 For a hidden layer, the chain rule gives:
 
 $$
