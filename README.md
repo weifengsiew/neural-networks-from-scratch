@@ -206,6 +206,8 @@ z^{(3)} = \Theta^{(3)}\mathbf{a}^{(2)} \approx 0.5980,
 p = \sigma(z^{(3)}) \approx 0.6452.
 $$
 
+Therefore, the final output is $p \approx 0.6452$, which represents a 64.52% predicted probability of class 1. Using a threshold of 0.5, the predicted class is 1.
+
 ## 4. Loss: comparing predictions with actual values
 
 The network learns by comparing its prediction with the known target. For binary classification, the implementation uses binary cross-entropy:
