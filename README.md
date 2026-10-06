@@ -423,8 +423,6 @@ def compute_deltas(thetas, y_pred, y_true, layers_activations):
 
 The loss can be viewed as a surface over the model's weights. The closed curves below are contours: every point on one curve has the same loss. At the current weights, the gradient points toward the steepest increase in loss, so the gradient-descent update moves in the opposite direction toward lower-loss contours.
 
-![Loss landscape with contours, gradient, and gradient-descent direction](loss_landscape.svg)
-
 For a weight connecting activation $a_k^{(l-1)}$ to neuron $j$ in layer $l$, the chain rule gives:
 
 $$
@@ -438,6 +436,8 @@ This gradient describes how much the loss changes when that particular weight ch
 | --- | --- |
 | $\frac{\partial J}{\partial \Theta^{(l)}_{jk}}$ | The derivative of the loss with respect to one particular weight. It measures how the loss changes when that weight changes slightly, while the other weights remain fixed. |
 | $\nabla_{\Theta^{(l)}}J$ | The matrix of these derivatives for every weight in the layer. Viewed as a vector in parameter space, it points in the direction of steepest increase in loss; gradient descent moves in the opposite direction. |
+
+![Loss landscape with hills, valleys, contours, gradient, and gradient-descent direction](loss_landscape.svg)
 
 In matrix form, the gradient for a layer is an outer product:
 
