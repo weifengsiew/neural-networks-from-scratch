@@ -298,12 +298,6 @@ $$
 
 Derivatives attribute changes in loss to changes in network values: $\partial \mathcal{L}/\partial a$ measures sensitivity to an activation, $\partial a/\partial z$ measures how the activation responds to its preactivation, and $\partial \mathcal{L}/\partial z$ combines both through the chain rule.
 
-| Derivative | Meaning |
-| --- | --- |
-| $\frac{\partial \mathcal{L}}{\partial a}$ | How the loss changes when an activation changes. |
-| $\frac{\partial a}{\partial z}$ | How the activation changes when the preactivation changes. |
-| $\frac{\partial \mathcal{L}}{\partial z}$ | How the loss changes when the preactivation changes, combining both effects through the chain rule. |
-
 The table's three quantities are connected by the chain rule:
 
 $$
@@ -322,6 +316,12 @@ $$
 \frac{\partial a}{\partial z}
 = a(1-a).
 $$
+
+| Derivative | Meaning |
+| --- | --- |
+| $\frac{\partial \mathcal{L}}{\partial a}$ | How the loss changes when an activation changes. |
+| $\frac{\partial a}{\partial z}$ | How the activation changes when the preactivation changes. |
+| $\frac{\partial \mathcal{L}}{\partial z}$ | How the loss changes when the preactivation changes, combining both effects through the chain rule. |
 
 Multiplying them gives the output-layer derivative $\frac{\partial \mathcal{L}}{\partial z}=p-y$.
 
