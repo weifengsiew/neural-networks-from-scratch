@@ -6,12 +6,12 @@ This repository contains feed-forward neural network implemented from scratch an
 
 A neural network is a composition of parameterized functions. Each layer receives an activation vector from the previous layer, computes an affine transformation—a weighted sum of the activations plus a bias—and then applies a nonlinear activation function to the result.
 
-For layer \(l\), let:
+For layer $l$, let:
 
-- \(\mathbf{a}^{(l-1)}\) be the incoming activations;
-- \(\Theta^{(l)}\) be the layer's weight matrix, including bias weights;
-- \(\mathbf{z}^{(l)}\) be the preactivation values; and
-- \(\mathbf{a}^{(l)}\) be the output activations.
+- $\mathbf{a}^{(l-1)}$ be the incoming activations;
+- $\Theta^{(l)}$ be the layer's weight matrix, including bias weights;
+- $\mathbf{z}^{(l)}$ be the preactivation values; and
+- $\mathbf{a}^{(l)}$ be the output activations.
 
 The layer computes:
 
@@ -52,7 +52,7 @@ $$
 \mathbf{a}^{(l)} = \begin{bmatrix}1 \\ \sigma(\mathbf{z}^{(l)})\end{bmatrix}.
 $$
 
-The leading \(1\) in the second equation is the bias activation passed to the next layer. This is the code for one hidden layer:
+The leading $1$ in the second equation is the bias activation passed to the next layer. This is the code for one hidden layer:
 
 ~~~python
 def _hidden_layer(self, theta: np.ndarray, input: np.ndarray):
@@ -93,7 +93,7 @@ def _forward_propagate(self, x: np.ndarray):
     return layers_preactivations, layers_activations, y_pred
 ~~~
 
-For binary classification, the final output \(p\) is interpreted as the predicted probability that \(y=1\). The class prediction is \(1\) when \(p > 0.5\), and \(0\) otherwise.
+For binary classification, the final output $p$ is interpreted as the predicted probability that $y=1$. The class prediction is $1$ when $p > 0.5$, and $0$ otherwise.
 
 ## 3. Loss: comparing predictions with actual values
 
@@ -104,7 +104,7 @@ $$
 = -\left[y\log(p) + (1-y)\log(1-p)\right],
 $$
 
-where \(y\in\{0,1\}\) is the actual class and \(p\in(0,1)\) is the predicted probability. A confident correct prediction has low loss; a confident incorrect prediction has high loss.
+where $y\in\{0,1\}$ is the actual class and $p\in(0,1)$ is the predicted probability. A confident correct prediction has low loss; a confident incorrect prediction has high loss.
 
 ~~~python
 def compute_cost(y_pred: np.ndarray, y_true: np.ndarray) -> float:
@@ -116,7 +116,7 @@ def compute_cost(y_pred: np.ndarray, y_true: np.ndarray) -> float:
     return cost
 ~~~
 
-For a batch \(\mathcal{B}\) containing \(m\) instances, the data loss is averaged:
+For a batch $\mathcal{B}$ containing $m$ instances, the data loss is averaged:
 
 $$
 J_{\text{data}} = \frac{1}{m}\sum_{i\in\mathcal{B}} \mathcal{L}(p_i,y_i).
@@ -130,7 +130,7 @@ J = J_{\text{data}}
 \left(\Theta^{(l)}_{jk}\right)^2.
 $$
 
-The condition \(k>0\) excludes the first, bias-weight column.
+The condition $k>0$ excludes the first, bias-weight column.
 
 ~~~python
 def regularize_and_average_cost(thetas, total_cost, regularization_strength, num_instances):
@@ -145,7 +145,7 @@ def regularize_and_average_cost(thetas, total_cost, regularization_strength, num
 
 ## 4. Backpropagation: computing the error signals
 
-Backpropagation computes the derivative of the loss with respect to every layer's preactivation. Define the delta for layer \(l\) as:
+Backpropagation computes the derivative of the loss with respect to every layer's preactivation. Define the delta for layer $l$ as:
 
 $$
 \boldsymbol{\delta}^{(l)}
@@ -204,7 +204,7 @@ def compute_deltas(thetas, y_pred, y_true, layers_activations):
 
 ## 5. Gradients: how deltas become weight derivatives
 
-For a weight connecting activation \(a_k^{(l-1)}\) to neuron \(j\) in layer \(l\), the chain rule gives:
+For a weight connecting activation $a_k^{(l-1)}$ to neuron $j$ in layer $l$, the chain rule gives:
 
 $$
 \frac{\partial J}{\partial \Theta^{(l)}_{jk}}
@@ -234,7 +234,7 @@ def compute_gradients(activations, deltas):
     return gradients
 ~~~
 
-For a batch, the per-instance gradients are summed and then divided by the batch size. The regularization gradient \(\lambda\Theta/m\) is added to non-bias weights before the update.
+For a batch, the per-instance gradients are summed and then divided by the batch size. The regularization gradient $\lambda\Theta/m$ is added to non-bias weights before the update.
 
 ## 6. Weight updates: gradient descent
 
@@ -246,7 +246,7 @@ $$
 - \eta\nabla_{\Theta^{(l)}}J,
 $$
 
-where \(\eta\) is the step size, or learning rate. The minus sign moves the parameters opposite to the direction in which the loss increases.
+where $\eta$ is the step size, or learning rate. The minus sign moves the parameters opposite to the direction in which the loss increases.
 
 ~~~python
 def _update_weights(self, gradients, step_size):
@@ -263,18 +263,18 @@ def _update_weights(self, gradients, step_size):
 
 ## 7. Instances, batches, epochs, and updates
 
-- An **instance** is one feature vector and its target \((\mathbf{x}_i,y_i)\).
+- An **instance** is one feature vector and its target $(\mathbf{x}_i,y_i)$.
 - A **batch** is a group of instances processed before one update.
 - An **epoch** is one complete pass through all training instances.
 - A **weight update** changes every weight matrix once.
 
-If there are \(N\) training instances and the batch size is \(B\), one epoch contains:
+If there are $N$ training instances and the batch size is $B$, one epoch contains:
 
 $$
 \text{updates per epoch} = \left\lceil\frac{N}{B}\right\rceil.
 $$
 
-For the demonstration, \(N=156\) and \(B=32\), so each epoch has \(\lceil156/32\rceil=5\) updates: four batches of 32 and one final batch of 28. One instance contributes a gradient; the batch combines those gradients; the update changes the weights; the next epoch repeats the process with the changed weights.
+For the demonstration, $N=156$ and $B=32$, so each epoch has $\lceil156/32\rceil=5$ updates: four batches of 32 and one final batch of 28. One instance contributes a gradient; the batch combines those gradients; the update changes the weights; the next epoch repeats the process with the changed weights.
 
 ~~~python
 for iteration in range(num_iterations):       # One iteration is one epoch.
