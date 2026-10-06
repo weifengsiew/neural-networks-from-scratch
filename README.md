@@ -219,6 +219,22 @@ $$
 
 where $y\in\{0,1\}$ is the actual class and $p\in(0,1)$ is the predicted probability. A confident correct prediction has low loss; a confident incorrect prediction has high loss.
 
+Using the running example's prediction $p=0.6452$, if the actual class is $y=1$:
+
+$$
+\mathcal{L}(0.6452,1)
+= -\left[1\log(0.6452) + 0\log(1-0.6452)\right]
+\approx 0.4382.
+$$
+
+If the actual class is instead $y=0$, the same prediction receives a larger loss:
+
+$$
+\mathcal{L}(0.6452,0)
+= -\left[0\log(0.6452) + 1\log(1-0.6452)\right]
+\approx 1.0362.
+$$
+
 ~~~python
 def compute_cost(y_pred: np.ndarray, y_true: np.ndarray) -> float:
     # y_pred is p and y_true is y in the binary cross-entropy equation.
