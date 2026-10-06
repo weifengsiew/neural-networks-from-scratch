@@ -161,58 +161,7 @@ print('p =', p)
 
 ## 3. Forward propagation: inputs become outputs
 
-Forward propagation evaluates the network from left to right. For one instance, the input features are augmented with a bias term, passed through every hidden layer, and finally transformed into an output probability.
-
-For a hidden layer, the equations are:
-
-$$
-\mathbf{z}^{(l)} = \Theta^{(l)}\mathbf{a}^{(l-1)},
-\qquad
-\mathbf{a}^{(l)} = \begin{bmatrix}1 \\ \sigma(\mathbf{z}^{(l)})\end{bmatrix}.
-$$
-
-The leading $1$ in the second equation is the bias activation passed to the next layer. This is the code for one hidden layer:
-
-~~~python
-def _hidden_layer(self, theta: np.ndarray, input: np.ndarray):
-    # theta contains one row per receiving neuron and one column per input,
-    # including column 0 for the bias.
-    preactivation = theta @ input
-
-    # Apply the nonlinear function element by element:
-    # activation_without_bias = sigmoid(preactivation).
-    activation = sigmoid(preactivation)
-
-    # Add the leading 1 so the next layer can include its bias weights.
-    activation = prepend_bias_term(activation)
-    return preactivation, activation
-~~~
-
-The complete forward pass stores all intermediate activations. They are needed later because backpropagation applies the chain rule through each layer.
-
-~~~python
-def _forward_propagate(self, x: np.ndarray):
-    # a^(0): input features with the bias activation prepended.
-    input_layer_activation = self._input_layer(x)
-    layers_activations = [input_layer_activation]
-    layers_preactivations = []
-
-    # Compute and save every hidden layer's z^(l) and a^(l).
-    hidden_preactivations, hidden_activations, final_hidden_activation = (
-        self._hidden_layers(input_layer_activation)
-    )
-    layers_preactivations.extend(hidden_preactivations)
-    layers_activations.extend(hidden_activations)
-
-    # The final sigmoid output is the prediction p.
-    output_preactivation, y_pred = self._output_layer(final_hidden_activation)
-    layers_preactivations.append(output_preactivation)
-    layers_activations.append(y_pred)
-
-    return layers_preactivations, layers_activations, y_pred
-~~~
-
-For binary classification, the final output $p$ is interpreted as the predicted probability that $y=1$. The class prediction is $1$ when $p > 0.5$, and $0$ otherwise.
+As described in Section 2, forward propagation applies multiple layers to the input values. Each layer receives the output values from the previous layer and produces its own output values, which become the input to the next layer. The output layer produces the final output values, or predictions. For binary classification, the final output $p$ is interpreted as the predicted probability that $y=1$; the class prediction is $1$ when $p > 0.5$, and $0$ otherwise.
 
 ## 4. Loss: comparing predictions with actual values
 
