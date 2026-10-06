@@ -22,7 +22,41 @@ z = 0.4(0.5) + (-0.6)(-1.0) + 0.2 = 1.0,
 a = \sigma(1.0) \approx 0.7311.
 $$
 
-This is the calculation performed by one neuron. A layer applies the same pattern to many neurons at once using vectors and matrices.
+The same calculation written with vectors makes the data flow clearer:
+
+$$
+\mathbf{a} =
+\begin{bmatrix}0.5 \\ -1.0\end{bmatrix},
+\qquad
+\mathbf{w} =
+\begin{bmatrix}0.4 \\ -0.6\end{bmatrix},
+\qquad
+b = 0.2.
+$$
+
+The neuron takes the dot product of the weight and input vectors, adds the scalar bias, and applies the activation function:
+
+$$
+z = \mathbf{w}^{T}\mathbf{a} + b
+=
+\begin{bmatrix}0.4 & -0.6\end{bmatrix}
+\begin{bmatrix}0.5 \\ -1.0\end{bmatrix}
++ 0.2
+= 1.0,
+\qquad
+a = \sigma(z) \approx 0.7311.
+$$
+
+In code, the input and weight vectors are one-dimensional NumPy arrays. A layer applies this same vector operation to many neurons at once using a matrix of weight vectors.
+
+~~~python
+activation = np.array([0.5, -1.0])
+weights = np.array([0.4, -0.6])
+bias = 0.2
+
+preactivation = weights @ activation + bias  # 1.0
+output = sigmoid(np.array([preactivation]))  # [0.7311]
+~~~
 
 ## 2. The neural network
 
