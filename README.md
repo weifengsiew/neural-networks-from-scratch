@@ -565,3 +565,39 @@ Validation and test loss are more informative than training loss when judging ge
 ## 12. Extra reading
 
 Useful next topics include activation functions, alternative optimizers, learning-rate schedules, regularization methods, and convolutional neural networks.
+
+### Loss functions
+
+| Loss function | Typical use | Strength | Limitation |
+| --- | --- | --- | --- |
+| Binary cross-entropy | Binary classification with a probability output | Strongly penalizes confident incorrect predictions | Requires predictions in the interval $(0,1)$ |
+| Multiclass cross-entropy | Multiclass classification with a softmax output | Compares a probability distribution with the true class | Requires one output for each class |
+| Mean squared error | Regression with numeric targets | Simple and useful for measuring numerical error | Can give weak gradients for confident classification errors |
+| Hinge loss | Margin-based classification | Encourages a margin between classes | Does not directly produce calibrated probabilities |
+
+### Activation functions
+
+| Activation | Typical use | Strength | Limitation |
+| --- | --- | --- | --- |
+| Sigmoid | Binary output layer | Produces a probability between 0 and 1 | Can have very small gradients in saturated regions |
+| ReLU | Hidden layers | Simple and usually provides strong gradients for positive inputs | Can become inactive when inputs remain negative |
+| Tanh | Hidden layers | Zero-centred output between -1 and 1 | Can also saturate and produce small gradients |
+| Leaky ReLU | Hidden layers | Keeps a small gradient for negative inputs | Introduces an additional slope choice |
+
+### Batch sizes
+
+| Batch size | Updates per epoch for $N=156$ | Strength | Limitation |
+| --- | ---: | --- | --- |
+| 16 | $\lceil156/16\rceil=10$ | Frequent updates and lower memory use | More updates can make training noisier and slower |
+| 32 | $\lceil156/32\rceil=5$ | Balanced computation and update frequency | Still gives an approximate rather than exact full-dataset gradient |
+| 64 | $\lceil156/64\rceil=3$ | Fewer, more stable updates | Uses more memory and may generalize less well in some settings |
+| 156 | $\lceil156/156\rceil=1$ | One exact full-dataset gradient per epoch | Each update is expensive and may require more epochs |
+
+### Optimizers
+
+| Optimizer | Main idea | Strength | Limitation |
+| --- | --- | --- | --- |
+| SGD | Subtract a fixed learning-rate multiple of the gradient | Simple and interpretable | Sensitive to the learning rate and can converge slowly |
+| Momentum SGD | Accumulate a moving direction from earlier gradients | Reduces oscillation and can accelerate progress | Requires a momentum hyperparameter |
+| Adam | Adapt the step size using moving estimates of gradient and squared gradient | Often converges quickly with little manual tuning | Uses more state and may generalize differently from plain SGD |
+| RMSprop | Scale updates using a moving average of squared gradients | Useful when gradient magnitudes vary across parameters | Still requires learning-rate and decay choices |
