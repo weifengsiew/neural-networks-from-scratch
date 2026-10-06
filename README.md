@@ -1,6 +1,19 @@
 # Neural Networks From Scratch
 
-This repository contains feed-forward neural network implemented from scratch and a notebook that applies it to the Parkinson's disease dataset. The sections below explain the theory underlying the feed-forward neural network implementation in [`neural_network.py`](neural_network.py).
+This repository contains a feed-forward neural network implemented from scratch and a notebook that applies it to the Parkinson's disease dataset. The sections below explain the theory underlying the feed-forward neural network implementation in [`neural_network.py`](neural_network.py).
+
+## Setup and run the notebook
+
+From this directory, create and activate a virtual environment, then install the project dependency:
+
+~~~bash
+python3.12 -m venv .venv-nn-from-scratch-py312
+source .venv-nn-from-scratch-py312/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+~~~
+
+Select `.venv-nn-from-scratch-py312 (Python 3.12)` as the Python interpreter and notebook kernel, open `parkinsons_demo.ipynb`, and choose **Run All**.
 
 ## 1. The neuron
 
@@ -421,8 +434,6 @@ def compute_deltas(thetas, y_pred, y_true, layers_activations):
 
 ## 7. Gradients: how deltas become weight derivatives
 
-The loss can be viewed as a surface over the model's weights. The closed curves below are contours: every point on one curve has the same loss. At the current weights, the gradient points toward the steepest increase in loss, so the gradient-descent update moves in the opposite direction toward lower-loss contours.
-
 For a weight connecting activation $a_k^{(l-1)}$ to neuron $j$ in layer $l$, the chain rule gives:
 
 $$
@@ -445,7 +456,7 @@ This gradient describes how much the loss changes when that particular weight ch
 | $\frac{\partial J}{\partial \Theta^{(l)}_{jk}}$ | The derivative of the loss with respect to one particular weight. It measures how the loss changes when that weight changes slightly, while the other weights remain fixed. |
 | $\nabla_{\Theta^{(l)}}J$ | The gradient of the loss with respect to all weights in layer $l$, represented as a matrix of derivatives. Viewed as a vector in parameter space, it points in the direction of steepest increase in loss; gradient descent moves in the opposite direction. |
 
-![Loss landscape with concentric contours](loss_landscape.png)
+![Loss landscape with concentric contours](assets/loss_landscape.png)
 
 The implementation uses `np.outer` to create exactly that matrix:
 
@@ -466,9 +477,7 @@ For a batch, the per-instance gradients are summed and then divided by the batch
 
 ## 8. Good news: PyTorch can automate the update
 
-In practice, libraries such as PyTorch provide loss functions and automatic differentiation to compute the loss and gradients. The manual equations here are mainly useful for understanding what those tools calculate.
-
-PyTorch can calculate the gradients and update the weights for us. After the loss is computed, `loss.backward()` calculates the gradients and `optimizer.step()` applies the gradient-descent update:
+In practice, PyTorch can calculate the gradients and update the weights for us. After the loss is computed, `loss.backward()` calculates the gradients and `optimizer.step()` applies the gradient-descent update:
 
 ~~~python
 optimizer.zero_grad()  # Clear gradients from the previous batch.
@@ -511,7 +520,6 @@ def _update_weights(self, gradients, step_size):
 
 - An **instance** is one feature vector and its target $(\mathbf{x}_i,y_i)$.
 - A **batch** is a group of instances processed before one update.
-- After each batch, the weights are updated once.
 - An **epoch** is one complete pass through all training instances.
 - A **weight update** changes every weight matrix once.
 
@@ -521,7 +529,7 @@ $$
 \text{updates per epoch} = \left\lceil\frac{N}{B}\right\rceil.
 $$
 
-For the demonstration, $N=156$ and $B=32$, so there are **5 weight updates per epoch**: $\lceil156/32\rceil=5$, consisting of four batches of 32 and one final batch of 28. Because weights are updated after each batch, each of these five batches produces one weight update. One instance contributes a gradient; the batch combines those gradients; the update changes the weights; the next epoch repeats the process with the changed weights.
+For the demonstration, $N=156$ and $B=32$, there are 5 batches, consisting of four batches of 32 and one final batch of 28. Because weights are updated after each batch, 5 batches per epoch results in 5 updates per epoch.
 
 ~~~python
 for iteration in range(num_iterations):       # One iteration is one epoch.
@@ -548,25 +556,24 @@ for iteration in range(num_iterations):       # One iteration is one epoch.
 
 Shuffling changes which instances share a batch, but not the number of instances processed per epoch. Increasing the batch size usually means fewer updates per epoch; increasing the number of epochs means more complete passes over the same training data.
 
-## 11. Evaluating Generalization with Held-Out Data
+## 11. Evaluating Generalization with a Train/Test Split
 
-We split the dataset into three parts:
+The demonstration uses a fixed two-way split of the Parkinson's dataset:
 
-- The **training set** is used to calculate gradients and update the weights.
-- The **validation set** is used during training to monitor performance and choose when to stop.
-- The **test set** is held back until the end for an unbiased final evaluation.
+- The **training set** contains 156 instances and is used to calculate gradients and update the weights.
+- The **test set** contains 39 instances and is not used to calculate gradients or update the weights.
 
-### When to stop updating weights
+The notebook passes the test data to `fit` so the implementation records test cost, accuracy, and F1 score after every weight update. It also reports the final test metrics after training. This is useful for observing generalization during the demonstration, but the test set should not be used to choose hyperparameters, training duration, or a model. For an unbiased final evaluation after tuning, split the training data into training and validation sets, use the validation set for decisions, and evaluate the test set only at the end.
 
-After each epoch, we evaluate the validation loss. If it fails to improve for a chosen number of consecutive epochs, training stops; this is **early stopping**. We restore the weights from the epoch with the lowest validation loss, then evaluate those weights on the test set.
-
-Validation and test loss are more informative than training loss when judging generalization, because they measure performance on instances that were not used to update the weights. The goal of machine learning is not to memorize the training set, but to learn predictions that remain accurate for new, unseen instances.
+This implementation does not currently provide a validation split, early stopping, or restoration of the best-validation weights. The goal remains to learn predictions that generalize to new, unseen instances rather than to memorize the training set.
 
 ## 12. Extra reading
 
 Useful next topics include activation functions, alternative optimizers, learning-rate schedules, regularization methods, and convolutional neural networks.
 
 ### Loss functions
+
+Further reading: [PyTorch binary cross-entropy](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCELoss.html), [multiclass cross-entropy](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html), and [mean squared error](https://docs.pytorch.org/docs/stable/generated/torch.nn.MSELoss.html).
 
 | Loss function | Equation | Typical use | Strength | Limitation |
 | --- | --- | --- | --- | --- |
@@ -576,6 +583,8 @@ Useful next topics include activation functions, alternative optimizers, learnin
 
 ### Activation functions
 
+Further reading: [PyTorch activation modules](https://docs.pytorch.org/docs/stable/nn.html#non-linear-activations), including [Sigmoid](https://docs.pytorch.org/docs/stable/generated/torch.nn.Sigmoid.html), [ReLU](https://docs.pytorch.org/docs/stable/generated/torch.nn.ReLU.html), and [Tanh](https://docs.pytorch.org/docs/stable/generated/torch.nn.Tanh.html).
+
 | Activation | Typical use | Strength | Limitation |
 | --- | --- | --- | --- |
 | Sigmoid | Binary output layer | Produces a probability between 0 and 1 | Can have very small gradients in saturated regions |
@@ -584,9 +593,11 @@ Useful next topics include activation functions, alternative optimizers, learnin
 
 The curves below show the different input-output shapes of the sigmoid, tanh, and ReLU activation functions.
 
-![Sigmoid, tanh, and ReLU activation functions](activation_functions.svg)
+![Sigmoid, tanh, and ReLU activation functions](assets/activation_functions.svg)
 
 ### Batch sizes
+
+Further reading: [PyTorch data loading and automatic batching](https://docs.pytorch.org/docs/stable/data.html).
 
 | Batch size | Updates per epoch for $N=156$ | Strength | Limitation |
 | --- | ---: | --- | --- |
@@ -597,6 +608,8 @@ The curves below show the different input-output shapes of the sigmoid, tanh, an
 
 ### Optimizers
 
+Further reading: [PyTorch optimizers](https://docs.pytorch.org/docs/stable/optim.html), including SGD, Adam, and RMSprop.
+
 | Optimizer | Main idea | Strength | Limitation |
 | --- | --- | --- | --- |
 | SGD | Subtract a fixed learning-rate multiple of the gradient | Simple and interpretable | Sensitive to the learning rate and can converge slowly |
@@ -605,6 +618,8 @@ The curves below show the different input-output shapes of the sigmoid, tanh, an
 | RMSprop | Scale updates using a moving average of squared gradients | Useful when gradient magnitudes vary across parameters | Still requires learning-rate and decay choices |
 
 ### Learning rates
+
+Further reading: [PyTorch learning-rate schedulers](https://docs.pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.StepLR.html).
 
 The learning rate controls how far the weights move after each gradient calculation. A useful choice is large enough to make progress but small enough to avoid overshooting a low-loss region.
 
@@ -616,17 +631,21 @@ The learning rate controls how far the weights move after each gradient calculat
 
 The diagram illustrates overshooting: a large learning rate can jump past the low-loss minimum, while a smaller learning rate takes more cautious steps toward it.
 
-![Small and large learning rates near a loss minimum](learning_rate_overshooting.svg)
+![Small and large learning rates near a loss minimum](assets/learning_rate_overshooting.svg)
 
 In practice, several candidate learning rates can be used to train separate models. Choose among them using validation loss and reserve the test set for the final evaluation. The learning rate that gives stable improvement and strong validation performance is usually preferred.
 
 ### Computer vision and convolutional layers
+
+Further reading: the [PyTorch image-classification tutorial](https://docs.pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html), which introduces a convolutional neural network on CIFAR-10.
 
 An image is naturally represented as a matrix of pixel values, or as several matrices when it has multiple colour channels. A standard fully connected network can flatten these matrices into one long vector before passing the values through ordinary hidden layers. For image tasks, convolutional neural networks instead use **convolutional layers** to preserve local spatial structure while learning features.
 
 Early convolutional layers learn low-level features such as edges, textures, and the presence of simple shapes such as circles. Later convolutional layers combine these into higher-level features, such as parts of objects. The output layer combines the high-level features to predict the image's class.
 
 ### Classification metrics
+
+Further reading: the [scikit-learn model-evaluation guide](https://scikit-learn.org/stable/modules/model_evaluation.html), including precision, recall, F1, ROC-AUC, and precision-recall evaluation.
 
 For binary classification, let **TP** be true positives, **TN** true negatives, **FP** false positives, and **FN** false negatives. These metrics evaluate predictions after choosing a classification threshold, except AUROC and AUPRC, which evaluate performance across thresholds.
 
