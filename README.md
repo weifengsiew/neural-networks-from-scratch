@@ -2,9 +2,9 @@
 
 This repository contains feed-forward neural network implemented from scratch and a notebook that applies it to the Parkinson's disease dataset. The sections below explain the theory underlying the feed-forward neural network implementation in [`neural_network.py`](neural_network.py).
 
-## 1. What is a neural network?
+## 1. The neuron
 
-A **neuron** is the basic computational unit of a neural network. It receives input values, multiplies them by weights, adds a bias, and transforms the result with an activation function. A **layer** is a collection of neurons that receives the same incoming activation vector. A neural network contains multiple layers of neurons: an input layer, one or more hidden layers, and an output layer.
+A **neuron** is the basic computational unit of a neural network. It receives input values, multiplies them by weights, adds a bias, and transforms the result with an activation function.
 
 For one neuron with inputs $a_1,\ldots,a_n$, weights $w_1,\ldots,w_n$, bias $b$, and activation function $\sigma$, the computation is:
 
@@ -14,7 +14,17 @@ z = \sum_{k=1}^{n} w_k a_k + b,
 a = \sigma(z).
 $$
 
-The matrix equations below are the efficient vectorized version of applying this same calculation to every neuron in a layer at once.
+For a simple numerical example, use inputs $a_1=0.5$ and $a_2=-1.0$, weights $w_1=0.4$ and $w_2=-0.6$, and bias $b=0.2$:
+
+$$
+z = 0.4(0.5) + (-0.6)(-1.0) + 0.2 = 1.0,
+\qquad
+a = \sigma(1.0) \approx 0.7311.
+$$
+
+This is the calculation performed by one neuron. A layer applies the same pattern to many neurons at once using vectors and matrices.
+
+## 2. The neural network
 
 A neural network is a composition of parameterized functions. Each layer receives an activation vector from the previous layer, computes an affine transformation—a weighted sum of the activations plus a bias—and then applies a nonlinear activation function to the result.
 
@@ -87,7 +97,7 @@ theta_hidden = np.array([
 theta_output = np.array([[0.1, 0.7, -0.2]])
 ~~~
 
-## 2. Forward propagation: inputs become outputs
+## 3. Forward propagation: inputs become outputs
 
 Forward propagation evaluates the network from left to right. For one instance, the input features are augmented with a bias term, passed through every hidden layer, and finally transformed into an output probability.
 
@@ -211,7 +221,7 @@ def _forward_propagate(self, x: np.ndarray):
 
 For binary classification, the final output $p$ is interpreted as the predicted probability that $y=1$. The class prediction is $1$ when $p > 0.5$, and $0$ otherwise.
 
-## 3. Loss: comparing predictions with actual values
+## 4. Loss: comparing predictions with actual values
 
 The network learns by comparing its prediction with the known target. For binary classification, the implementation uses binary cross-entropy:
 
@@ -259,7 +269,7 @@ def regularize_and_average_cost(thetas, total_cost, regularization_strength, num
     return total_cost / num_instances + regularization
 ~~~
 
-## 4. Backpropagation: computing the error signals
+## 5. Backpropagation: computing the error signals
 
 Backpropagation computes the derivative of the loss with respect to every layer's preactivation. Define the delta for layer $l$ as:
 
@@ -318,7 +328,7 @@ def compute_deltas(thetas, y_pred, y_true, layers_activations):
     return deltas
 ~~~
 
-## 5. Gradients: how deltas become weight derivatives
+## 6. Gradients: how deltas become weight derivatives
 
 For a weight connecting activation $a_k^{(l-1)}$ to neuron $j$ in layer $l$, the chain rule gives:
 
@@ -352,7 +362,7 @@ def compute_gradients(activations, deltas):
 
 For a batch, the per-instance gradients are summed and then divided by the batch size. The regularization gradient $\lambda\Theta/m$ is added to non-bias weights before the update.
 
-## 6. Weight updates: gradient descent
+## 7. Weight updates: gradient descent
 
 Once the gradient is known, gradient descent changes every parameter according to:
 
@@ -377,7 +387,7 @@ def _update_weights(self, gradients, step_size):
     self.thetas = updated_thetas
 ~~~
 
-## 7. Instances, batches, epochs, and updates
+## 8. Instances, batches, epochs, and updates
 
 - An **instance** is one feature vector and its target $(\mathbf{x}_i,y_i)$.
 - A **batch** is a group of instances processed before one update.
