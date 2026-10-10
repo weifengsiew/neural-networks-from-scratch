@@ -5,3 +5,7 @@ __pycache__/
 .pytest_cache/
 *.egg-info/
 .DS_Store
+
+# Local documentation and agent instructions
+docs/
+agents.md
