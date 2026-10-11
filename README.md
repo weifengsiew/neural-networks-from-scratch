@@ -575,21 +575,21 @@ Useful next topics include activation functions, alternative optimizers, learnin
 
 Further reading: [PyTorch binary cross-entropy](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCELoss.html), [multiclass cross-entropy](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html), and [mean squared error](https://docs.pytorch.org/docs/stable/generated/torch.nn.MSELoss.html).
 
-| Loss function | Equation | Typical use | Strength | Limitation |
-| --- | --- | --- | --- | --- |
-| Binary cross-entropy | $-\left[y\log(p)+(1-y)\log(1-p)\right]$ | Binary classification with a probability output | Strongly penalizes confident incorrect predictions | Requires predictions in the interval $(0,1)$ |
-| Multiclass cross-entropy | $-\sum_{c=1}^{C} y_c\log(p_c)$ | Multiclass classification with one score/logit per class | Compares the class probabilities with the true class | Requires one output for each class |
-| Mean squared error | $\frac{1}{d}\sum_{j=1}^{d}(y_j-\hat{y}_j)^2$ | Regression with numeric targets | Simple and useful for measuring numerical error | Can produce weaker gradients than cross-entropy in some sigmoid-classification cases |
+| Loss function | Equation | Typical use | Properties | Practical strengths | Practical limitations |
+| --- | --- | --- | --- | --- | --- |
+| Binary cross-entropy | $-\left[y\log(p)+(1-y)\log(1-p)\right]$ | Binary classification | Logarithmic loss on the predicted probability of the target class | Directly trains probability estimates and strongly penalizes confident errors | Use a logits-aware implementation for stable training from raw logits |
+| Multiclass cross-entropy | $-\sum_{c=1}^{C} y_c\log(p_c)$ | Multiclass classification | Logarithmic loss over class probabilities; uses one output per class | Standard objective for probabilistic multiclass classifiers | — |
+| Mean squared error | $\frac{1}{d}\sum_{j=1}^{d}(y_j-\hat{y}_j)^2$ | Regression with numeric targets | Squares each prediction error, so larger errors contribute more | Simple objective with a direct interpretation in target units | Can provide weaker gradients than cross-entropy for some sigmoid-classification setups |
 
 ### Activation functions
 
 Further reading: [PyTorch activation modules](https://docs.pytorch.org/docs/stable/nn.html#non-linear-activations), including [Sigmoid](https://docs.pytorch.org/docs/stable/generated/torch.nn.Sigmoid.html), [ReLU](https://docs.pytorch.org/docs/stable/generated/torch.nn.ReLU.html), and [Tanh](https://docs.pytorch.org/docs/stable/generated/torch.nn.Tanh.html).
 
-| Activation | Typical use | Strength | Limitation |
-| --- | --- | --- | --- |
-| Sigmoid | Binary output layer | Produces a probability between 0 and 1 | Can have very small gradients in saturated regions |
-| ReLU | Hidden layers | Simple and usually provides strong gradients for positive inputs | Can become inactive when inputs remain negative |
-| Tanh | Hidden layers | Zero-centred output between -1 and 1 | Can also saturate and produce small gradients |
+| Activation | Typical use | Properties | Practical strengths | Practical limitations |
+| --- | --- | --- | --- | --- |
+| Sigmoid | Binary output layer | Maps inputs to values between 0 and 1 | Gives a probability-like output for binary classification | Gradients become small in saturated regions |
+| ReLU | Hidden layers | Returns zero for negative inputs and the input for positive values | Computationally inexpensive | Units can remain inactive when their inputs stay negative |
+| Tanh | Hidden layers | Maps inputs to values between -1 and 1, with zero-centred outputs | Zero-centred activations can help optimization | Gradients become small in saturated regions |
 
 The curves below show the different input-output shapes of the sigmoid, tanh, and ReLU activation functions.
 
@@ -599,23 +599,23 @@ The curves below show the different input-output shapes of the sigmoid, tanh, an
 
 Further reading: [PyTorch data loading and automatic batching](https://docs.pytorch.org/docs/stable/data.html).
 
-| Batch size | Updates per epoch for $N=156$ | Strength | Limitation |
-| --- | ---: | --- | --- |
-| 16 | $\lceil156/16\rceil=10$ | Frequent updates and lower memory use | Gradient estimates are noisier and require more updates per epoch |
-| 32 | $\lceil156/32\rceil=5$ | Balanced computation and update frequency | Still gives an approximate rather than exact full-dataset gradient |
-| 64 | $\lceil156/64\rceil=3$ | Fewer, more stable updates | Uses more memory and has less mini-batch noise, which can affect generalization |
-| 156 | $\lceil156/156\rceil=1$ | One exact full-dataset gradient per epoch | Each update is more expensive and there is no mini-batch noise |
+| Batch size | Updates per epoch for $N=156$ | Properties | Practical strengths | Practical limitations |
+| --- | ---: | --- | --- | --- |
+| 16 | $\lceil156/16\rceil=10$ | Uses small mini-batch gradient estimates | Frequent updates and lower memory use per update | Noisier updates and more updates per epoch increase training work |
+| 32 | $\lceil156/32\rceil=5$ | Uses a mini-batch estimate rather than the full-dataset gradient | A middle ground between update frequency and memory use | The best trade-off depends on the model, data, and hardware |
+| 64 | $\lceil156/64\rceil=3$ | Averages gradients over more examples per update than smaller batches | Fewer, typically steadier updates | Uses more memory; reduced gradient noise can affect generalization |
+| 156 | $\lceil156/156\rceil=1$ | Uses the full training set to calculate each gradient | Produces the full-dataset gradient for each update | Requires more memory per update and makes only one update per epoch |
 
 ### Optimizers
 
 Further reading: [PyTorch optimizers](https://docs.pytorch.org/docs/stable/optim.html), including SGD, Adam, and RMSprop.
 
-| Optimizer | Main idea | Strength | Limitation |
-| --- | --- | --- | --- |
-| SGD | Subtract a fixed learning-rate multiple of the gradient | Simple and interpretable | Sensitive to the learning rate and can converge slowly |
-| Momentum SGD | Accumulate a moving direction from earlier gradients | Reduces oscillation and can accelerate progress | Requires a momentum hyperparameter |
-| Adam | Adapt per-parameter step sizes using moving estimates of the gradient and squared gradient | Often converges quickly | Uses more state and may generalize differently from plain SGD |
-| RMSprop | Scale updates using a moving average of squared gradients | Useful when gradient magnitudes vary across parameters | Still requires learning-rate and decay choices |
+| Optimizer | Main idea | Properties | Practical strengths | Practical limitations |
+| --- | --- | --- | --- | --- |
+| SGD | Subtract a fixed learning-rate multiple of the gradient | Uses the current gradient directly for each update | Simple, interpretable, and low in memory use | Sensitive to the learning rate and may converge slowly |
+| Momentum SGD | Accumulate a moving direction from earlier gradients | Combines the current gradient with a running velocity | Can reduce oscillation and accelerate convergence | Adds a momentum setting and small amount of state |
+| Adam | Adapt per-parameter step sizes using moving estimates of the gradient and squared gradient | Tracks first and second moments of the gradients | Often makes useful progress with less learning-rate tuning | Uses more memory than SGD; performance and generalization vary by task |
+| RMSprop | Scale updates using a moving average of squared gradients | Normalizes updates according to recent gradient magnitudes | Can help when gradient magnitudes vary across parameters | Requires choices for the learning rate and decay rate |
 
 ### Learning rates
 
