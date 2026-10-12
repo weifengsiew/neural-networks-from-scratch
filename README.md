@@ -556,16 +556,25 @@ for iteration in range(num_iterations):       # One iteration is one epoch.
 
 Shuffling changes which instances share a batch, but not the number of instances processed per epoch. Increasing the batch size usually means fewer updates per epoch; increasing the number of epochs means more complete passes over the same training data.
 
-## 11. Evaluating Generalization with a Train/Test Split
+## 11. Observing Generalization During Training
 
-The demonstration uses a fixed two-way split of the Parkinson's dataset:
+**Generalization** is the model's ability to make accurate predictions for instances that were not used to update its weights. The most useful way to observe it is to compare training and held-out metrics throughout training, rather than looking only at the final training score.
+
+The demonstration uses a fixed two-way train/test split:
 
 - The **training set** contains 156 instances and is used to calculate gradients and update the weights.
 - The **test set** contains 39 instances and is not used to calculate gradients or update the weights.
 
-The notebook passes the test data to `fit` so the implementation records test cost, accuracy, and F1 score after every weight update. It also reports the final test metrics after training. This is useful for observing generalization during the demonstration, but the test set should not be used to choose hyperparameters, training duration, or a model. For an unbiased final evaluation after tuning, split the training data into training and validation sets, use the validation set for decisions, and evaluate the test set only at the end.
+After every mini-batch weight update, the notebook evaluates both sets and records regularized cost, accuracy, and F1 score. The training-history plots show these values against the number of weight updates.
 
-This implementation does not currently provide a validation split, early stopping, or restoration of the best-validation weights. The goal remains to learn predictions that generalize to new, unseen instances rather than to memorize the training set.
+| Pattern in the curves | What it suggests |
+| --- | --- |
+| Training cost decreases and test cost decreases; training metrics improve and test metrics improve | The model is learning patterns that transfer reasonably well to unseen instances. |
+| Training cost decreases and test cost increases; training metrics improve and test metrics stop improving | The model may be overfitting the training set. A widening train/test gap is a warning sign. |
+| Training and test costs remain high; training and test metrics remain poor | The model may be underfitting, or the optimization settings may not be allowing it to learn effectively. |
+| Training and test costs or metrics change sharply between updates | Training may be unstable, for example because the learning rate is too large or the batches are small. |
+
+Note: Do not use the test set for deciding hyperparameters or training duration. It should only be used for a final evaluation of generalisation once the model has been trained. Instead, split the training data into training and validation sets, and then use validation performance curves to choose hyperparameters or training duration. 
 
 ## 12. Extra reading
 
@@ -575,21 +584,21 @@ Useful next topics include activation functions, alternative optimizers, learnin
 
 Further reading: [PyTorch binary cross-entropy](https://docs.pytorch.org/docs/stable/generated/torch.nn.BCELoss.html), [multiclass cross-entropy](https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html), and [mean squared error](https://docs.pytorch.org/docs/stable/generated/torch.nn.MSELoss.html).
 
-| Loss function | Equation | Typical use | Strength | Limitation |
-| --- | --- | --- | --- | --- |
-| Binary cross-entropy | $-\left[y\log(p)+(1-y)\log(1-p)\right]$ | Binary classification with a probability output | Strongly penalizes confident incorrect predictions | Requires predictions in the interval $(0,1)$ |
-| Multiclass cross-entropy | $-\sum_{c=1}^{C} y_c\log(p_c)$ | Multiclass classification with one score/logit per class | Compares the class probabilities with the true class | Requires one output for each class |
-| Mean squared error | $\frac{1}{d}\sum_{j=1}^{d}(y_j-\hat{y}_j)^2$ | Regression with numeric targets | Simple and useful for measuring numerical error | Can produce weaker gradients than cross-entropy in some sigmoid-classification cases |
+| Loss function | Equation | Typical use |
+| --- | --- | --- |
+| Binary cross-entropy | $-\left[y\log(p)+(1-y)\log(1-p)\right]$ | Binary classification with a probability output |
+| Multiclass cross-entropy | $-\sum_{c=1}^{C} y_c\log(p_c)$ | Multiclass classification with one score/logit per class |
+| Mean squared error | $\frac{1}{d}\sum_{j=1}^{d}(y_j-\hat{y}_j)^2$ | Regression with numeric targets |
 
 ### Activation functions
 
 Further reading: [PyTorch activation modules](https://docs.pytorch.org/docs/stable/nn.html#non-linear-activations), including [Sigmoid](https://docs.pytorch.org/docs/stable/generated/torch.nn.Sigmoid.html), [ReLU](https://docs.pytorch.org/docs/stable/generated/torch.nn.ReLU.html), and [Tanh](https://docs.pytorch.org/docs/stable/generated/torch.nn.Tanh.html).
 
-| Activation | Typical use | Strength | Limitation |
-| --- | --- | --- | --- |
-| Sigmoid | Binary output layer | Produces a probability between 0 and 1 | Can have very small gradients in saturated regions |
-| ReLU | Hidden layers | Simple and usually provides strong gradients for positive inputs | Can become inactive when inputs remain negative |
-| Tanh | Hidden layers | Zero-centred output between -1 and 1 | Can also saturate and produce small gradients |
+| Activation | Typical use | Properties |
+| --- | --- | --- |
+| Sigmoid | Binary output layer | Maps inputs to the interval $(0,1)$ |
+| ReLU | Hidden layers | Outputs zero for negative inputs and the input itself for positive inputs |
+| Tanh | Hidden layers | Maps inputs to the interval $(-1,1)$ |
 
 The curves below show the different input-output shapes of the sigmoid, tanh, and ReLU activation functions.
 
@@ -599,23 +608,23 @@ The curves below show the different input-output shapes of the sigmoid, tanh, an
 
 Further reading: [PyTorch data loading and automatic batching](https://docs.pytorch.org/docs/stable/data.html).
 
-| Batch size | Updates per epoch for $N=156$ | Strength | Limitation |
-| --- | ---: | --- | --- |
-| 16 | $\lceil156/16\rceil=10$ | Frequent updates and lower memory use | Gradient estimates are noisier and require more updates per epoch |
-| 32 | $\lceil156/32\rceil=5$ | Balanced computation and update frequency | Still gives an approximate rather than exact full-dataset gradient |
-| 64 | $\lceil156/64\rceil=3$ | Fewer, more stable updates | Uses more memory and has less mini-batch noise, which can affect generalization |
-| 156 | $\lceil156/156\rceil=1$ | One exact full-dataset gradient per epoch | Each update is more expensive and there is no mini-batch noise |
+| Batch size | Updates per epoch for $N=156$ | Properties |
+| --- | ---: | --- |
+| 16 | $\lceil156/16\rceil=10$ | Frequent updates, lower memory per update, and noisier gradient estimates |
+| 32 | $\lceil156/32\rceil=5$ | Moderate update frequency, moderate memory per update, and moderate gradient noise |
+| 64 | $\lceil156/64\rceil=3$ | Fewer updates, higher memory per update, and less gradient noise |
+| 156 | $\lceil156/156\rceil=1$ | One update per epoch, highest memory per update, and no mini-batch noise |
 
 ### Optimizers
 
 Further reading: [PyTorch optimizers](https://docs.pytorch.org/docs/stable/optim.html), including SGD, Adam, and RMSprop.
 
-| Optimizer | Main idea | Strength | Limitation |
+| Optimizer | Main idea | Strengths | Limitations |
 | --- | --- | --- | --- |
-| SGD | Subtract a fixed learning-rate multiple of the gradient | Simple and interpretable | Sensitive to the learning rate and can converge slowly |
-| Momentum SGD | Accumulate a moving direction from earlier gradients | Reduces oscillation and can accelerate progress | Requires a momentum hyperparameter |
-| Adam | Adapt per-parameter step sizes using moving estimates of the gradient and squared gradient | Often converges quickly | Uses more state and may generalize differently from plain SGD |
-| RMSprop | Scale updates using a moving average of squared gradients | Useful when gradient magnitudes vary across parameters | Still requires learning-rate and decay choices |
+| SGD | Subtract a fixed learning-rate multiple of the gradient | Simple to implement and interpret | Sensitive to the learning rate and can converge slowly |
+| Momentum SGD | Accumulate a moving direction from earlier gradients | Can reduce oscillation and accelerate progress | Requires a momentum hyperparameter |
+| Adam | Adapt per-parameter step sizes using moving estimates of the gradient and squared gradient | Can reach a useful loss quickly | Requires more optimizer state, increasing memory use |
+| RMSprop | Scale updates using a moving average of squared gradients | Can help when gradient magnitudes vary across parameters | Requires learning-rate and decay choices |
 
 ### Learning rates
 
@@ -625,9 +634,9 @@ The learning rate controls how far the weights move after each gradient calculat
 
 | Learning rate | Effect on updates | Typical symptom |
 | --- | --- | --- |
-| Small | Makes cautious, stable changes | Loss decreases slowly and training may need more epochs |
-| Moderate | Balances progress and stability | Loss usually decreases steadily |
-| Large | Makes aggressive changes | Loss may oscillate, diverge, or skip over a minimum |
+| Small | Scales the gradient down strongly, so weights move only a short distance per update | Loss decreases slowly and training may need more epochs |
+| Moderate | Produces intermediate step sizes proportional to the gradient | Loss usually decreases steadily |
+| Large | Scales the gradient up, so weights move farther per update and may cross low-loss regions | Loss may oscillate, diverge, or skip over a minimum |
 
 The diagram illustrates overshooting: a large learning rate can jump past the low-loss minimum, while a smaller learning rate takes more cautious steps toward it.
 
